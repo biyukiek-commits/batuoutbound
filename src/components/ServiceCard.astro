@@ -1,0 +1,91 @@
+---
+import type { OutboundService } from "../data/services";
+import WhatsAppButton from "./WhatsAppButton.astro";
+
+export interface Props {
+  service: OutboundService;
+}
+
+const { service } = Astro.props;
+---
+
+<div class="col-lg-4 col-md-6 mb-4">
+  <div class="card-dark h-100">
+    
+    <!-- Service Icon -->
+    <div class="feature-icon-box">
+      {service.icon === "users-gear" && (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      )}
+      {service.icon === "briefcase" && (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
+      )}
+      {service.icon === "heart-hands" && (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+        </svg>
+      )}
+      {service.icon === "graduation-cap" && (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path>
+          <path d="M22 10v6"></path>
+          <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path>
+        </svg>
+      )}
+      {service.icon === "water-waves" && (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
+          <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
+          <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
+        </svg>
+      )}
+      {service.icon === "crosshair" && (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="22" y1="12" x2="18" y2="12"></line>
+          <line x1="6" y1="12" x2="2" y2="12"></line>
+          <line x1="12" y1="6" x2="12" y2="2"></line>
+          <line x1="12" y1="22" x2="12" y2="18"></line>
+        </svg>
+      )}
+    </div>
+
+    <!-- Title & Description -->
+    <h3 class="h4 text-light mb-2">{service.title}</h3>
+    <p class="small text-muted-custom mb-3">{service.shortDesc}</p>
+
+    <!-- Key Points -->
+    <div class="mb-4 flex-grow-1">
+      <ul class="list-unstyled small mb-0">
+        {service.keyBenefits.map((benefit) => (
+          <li class="d-flex align-items-start gap-2 mb-2 text-light">
+            <span class="text-accent" aria-hidden="true">✔</span>
+            <span>{benefit}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="pt-3 border-top border-dark mt-auto">
+      <WhatsAppButton
+        variant="outline"
+        size="sm"
+        serviceTitle={service.title}
+        className="w-100 justify-content-center"
+      >
+        Konsultasi Layanan Ini
+      </WhatsAppButton>
+    </div>
+
+  </div>
+</div>
+

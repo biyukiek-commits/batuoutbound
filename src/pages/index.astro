@@ -1,16 +1,556 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import PackageCard from "../components/PackageCard.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import GalleryGrid from "../components/GalleryGrid.astro";
+import FAQAccordion from "../components/FAQAccordion.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+
+import { packagesData } from "../data/packages";
+import { servicesData } from "../data/services";
+import { homepageFaqs } from "../data/faq";
+import { previewArticles } from "../data/articles";
+import { siteConfig } from "../data/site";
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  generateWebPageSchema,
+  generateFAQSchema
+} from "../utils/schema";
+
+const pageTitle = "Outbound Batu Malang | Paket Outbound, Team Building & Gathering";
+const pageDescription = "Temukan pilihan kegiatan outbound, team building, dan gathering di kawasan sejuk Batu Malang. Program kustom, fasilitator profesional, dan konsultasi WhatsApp 081217366600.";
+const pageUrl = `${siteConfig.url}/`;
+
+// Structured Data Schemas (PRD Section 11)
+const schemas = [
+  generateOrganizationSchema(),
+  generateWebSiteSchema(),
+  generateWebPageSchema({
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl
+  }),
+  generateFAQSchema(homepageFaqs)
+];
+
+// Client Testimonials
+const testimonials = [
+  {
+    name: "Bambang Hariyanto",
+    role: "HR & People Operations Manager",
+    company: "Perusahaan Manufaktur Surabaya",
+    text: "Kegiatan 2D1N di Coban Rondo Batu kemarin sangat luar biasa! Fasilitator mampu mencairkan suasana antar bagian yang sebelumnya jarang berinteraksi. Rundown acara disiplin namun tidak melelahkan. Sangat direkomendasikan untuk outing kantor.",
+    rating: 5,
+    package: "Team Building Corporate"
+  },
+  {
+    name: "Dra. Siti Rahmawati",
+    role: "Koordinator Kesiswaan",
+    company: "SMA Swasta di Sidoarjo",
+    text: "Program character building untuk 120 siswa kami berjalan sangat tertib dan mendidik. Tim fasilitator sabar, pengawasan keselamatannya ketat, dan materi nilai kepemimpinannya mengena. Anak-anak pulang dengan semangat baru.",
+    rating: 5,
+    package: "Outbound Karakter Siswa"
+  },
+  {
+    name: "dr. Hendra Kusuma",
+    role: "Ketua Panitia Gathering",
+    company: "Ikatan Alumni FK Malang",
+    text: "Paket kombo outbound dan rafting Kaliwatu sangat seru! Semua keluarga mulai dari anak-anak sampai yang senior bisa menikmati porsi permainannya masing-masing. Pelayanan ramah dan makanan prasmanannya lezat.",
+    rating: 5,
+    package: "Outbound + Rafting Kaliwatu"
+  }
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemas={schemas}
+>
+  <!-- =========================================================================
+       HERO SECTION (PRD FR-01)
+       ========================================================================= -->
+  <section class="hero-section text-light position-relative" aria-label="Pengenalan Utama">
+    <!-- Optimized hero background image -->
+    <img
+      src="/images/hero/hero-outbound-batu.webp"
+      alt="Kegiatan outbound team building di tengah suasana alam sejuk pegunungan Kota Batu Malang"
+      class="hero-background"
+      fetchpriority="high"
+      width="1600"
+      height="900"
+    />
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="container-xl hero-content">
+      <div class="row align-items-center gy-5">
+        
+        <div class="col-lg-8 col-xl-7">
+          <div class="section-badge">
+            Kawasan Wisata Sejuk Kota Batu & Malang Raya
+          </div>
+
+          <h1 class="display-4 fw-bolder mb-3">
+            Paket Outbound, <span class="text-accent">Team Building</span> & Gathering di Batu Malang
+          </h1>
+
+          <p class="lead text-light text-opacity-90 mb-4" style="font-size: 1.15rem; line-height: 1.7;">
+            Wujudkan kekompakan tim, sinergi kerja, dan momen kebersamaan berkesan di alam pegunungan Kota Batu yang sejuk. Dipandu fasilitator profesional dengan simulasi terstruktur, aman, dan fleksibel sesuai kebutuhan instansi Anda.
+          </p>
+
+          <!-- Dual Conversion CTA -->
+          <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+            <WhatsAppButton
+              variant="gold"
+              size="lg"
+              customMessage="Halo Admin Batu Outbound, saya ingin konsultasi kebutuhan kegiatan outbound / gathering di Batu Malang."
+              ariaLabel="Konsultasi gratis paket outbound Batu Malang via WhatsApp"
+            >
+              Konsultasi via WhatsApp (081217366600)
+            </WhatsAppButton>
+
+            <a href="#paket-unggulan" class="btn-outline-gold py-3 px-4 fs-6">
+              Lihat Pilihan Paket &darr;
+            </a>
+          </div>
+
+          <!-- Quick Trust Points -->
+          <div class="d-flex flex-wrap align-items-center gap-4 text-muted-custom small pt-2">
+            <span class="d-inline-flex align-items-center gap-2">
+              <span class="text-accent fw-bold">✓</span> Tanpa Biaya Konsultasi
+            </span>
+            <span class="d-inline-flex align-items-center gap-2">
+              <span class="text-accent fw-bold">✓</span> Proposal Kustom 1x24 Jam
+            </span>
+            <span class="d-inline-flex align-items-center gap-2">
+              <span class="text-accent fw-bold">✓</span> Standar Safety & Fasilitator SNI
+            </span>
+          </div>
+        </div>
+
+        <!-- Hero Stats Panel -->
+        <div class="col-lg-4 col-xl-5">
+          <div class="row g-3">
+            <div class="col-6">
+              <div class="hero-stat-card">
+                <div class="hero-stat-number">100%</div>
+                <div class="hero-stat-label">Rundown Kustom Sesuai Target Organisasi</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="hero-stat-card">
+                <div class="hero-stat-number">20-500+</div>
+                <div class="hero-stat-label">Kapasitas Peserta Kecil hingga Skala Akbar</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="hero-stat-card">
+                <div class="hero-stat-number">6+</div>
+                <div class="hero-stat-label">Pilihan Venue Alam Favorit di Kota Batu</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="hero-stat-card">
+                <div class="hero-stat-number">1:12</div>
+                <div class="hero-stat-label">Rasio Ideal Pendampingan Fasilitator</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 1: RINGKASAN KEUNGGULAN (VALUE PROPOSITION)
+       ========================================================================= -->
+  <section class="section-padding bg-surface-alt" aria-labelledby="heading-keunggulan">
+    <div class="container-xl">
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-lg-8">
+          <div class="section-badge">Nilai Layanan Kami</div>
+          <h2 id="heading-keunggulan" class="h1 mb-3">Mengapa Mempercayakan Kegiatan Tim Anda Bersama Kami?</h2>
+          <p class="text-muted-custom">
+            Kami mengombinasikan keindahan alam pegunungan Kota Batu dengan metodologi simulasi dinamika kelompok yang berdampak nyata bagi kebersamaan dan kinerja organisasi.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        
+        <div class="col-lg-3 col-md-6">
+          <div class="card-dark">
+            <div class="feature-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2v20"></path>
+                <path d="m17 5-5-3-5 3"></path>
+                <path d="m17 19-5 3-5-3"></path>
+                <path d="M2 12h20"></path>
+              </svg>
+            </div>
+            <h3 class="h5 text-light mb-2">Experiential Learning</h3>
+            <p class="small text-muted-custom mb-0">
+              Setiap permainan dirancang memiliki makna pembelajaran (debriefing) untuk memupuk kepemimpinan, komunikasi terbuka, dan kepercayaan antarrekan.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="card-dark">
+            <div class="feature-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m9 12 2 2 4-4"></path>
+              </svg>
+            </div>
+            <h3 class="h5 text-light mb-2">Standar Safety Terjamin</h3>
+            <p class="small text-muted-custom mb-0">
+              Peralatan uji kelayakan berkala, briefing keselamatan komprehensif, tim medis P3K siaga, dan skenario mitigasi cuaca di alam terbuka.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="card-dark">
+            <div class="feature-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 class="h5 text-light mb-2">Fasilitator Berpengalaman</h3>
+            <p class="small text-muted-custom mb-0">
+              Dikelola oleh Master Game dan instruktur outdoor berlisensi yang komunikatif, ramah, energik, dan mampu mengelola peserta dari berbagai kelompok usia.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="card-dark">
+            <div class="feature-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <h3 class="h5 text-light mb-2">All-in-One One Stop</h3>
+            <p class="small text-muted-custom mb-0">
+              Kami bantu seluruh kebutuhan kegiatan Anda mulai dari perizinan lokasi, penginapan villa/resort, konsumsi prasmanan, transportasi, hingga dokumentasi.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 2: RINGKASAN PAKET UNGGULAN (PRD FR-03)
+       ========================================================================= -->
+  <section class="section-padding" id="paket-unggulan" aria-labelledby="heading-paket">
+    <div class="container-xl">
+      <div class="row align-items-end justify-content-between mb-5">
+        <div class="col-lg-8">
+          <div class="section-badge">Paket Populer</div>
+          <h2 id="heading-paket" class="h1 mb-2">Pilihan Paket Outbound Favorit di Batu Malang</h2>
+          <p class="text-muted-custom mb-0">
+            Daftar paket kegiatan outdoor yang paling sering dipilih oleh instansi korporat, rombongan dinas, sekolah, dan keluarga.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+          <a href="/paket/" class="text-accent fw-bold text-decoration-none d-inline-flex align-items-center gap-2">
+            <span>Lihat Rincian Seluruh Paket</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="row">
+        {packagesData.map((pkg) => (
+          <PackageCard pkg={pkg} />
+        ))}
+      </div>
+
+      <!-- Additional note on pricing flexibility per PRD FR-03 -->
+      <div class="p-4 rounded-3 mt-3 border border-dark" style="background-color: var(--color-surface);">
+        <div class="row align-items-center">
+          <div class="col-lg-8 mb-3 mb-lg-0">
+            <h3 class="h5 text-light mb-1">Butuh Penyesuaian Rundown, Menu Makan, atau Jumlah Peserta?</h3>
+            <p class="small text-muted-custom mb-0">
+              Harga paket dapat disesuaikan dengan venue pilihan Anda (hutan pinus, lapangan resort, atau camping ground), opsi penginapan, dan fasilitas tambahan.
+            </p>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+            <WhatsAppButton
+              variant="gold"
+              size="sm"
+              customMessage="Halo Admin, saya ingin meminta rancangan estimasi anggaran kustom untuk kegiatan outbound di Batu Malang."
+            >
+              Minta Rincian Anggaran Kustom
+            </WhatsAppButton>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 3: RINGKASAN LAYANAN (PRD FR-04)
+       ========================================================================= -->
+  <section class="section-padding bg-surface-alt" id="layanan" aria-labelledby="heading-layanan">
+    <div class="container-xl">
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-lg-8">
+          <div class="section-badge">Kategori Layanan</div>
+          <h2 id="heading-layanan" class="h1 mb-3">Layanan Outbound & Gathering Komprehensif</h2>
+          <p class="text-muted-custom">
+            Dari pelatihan sinergi tim korporasi berorientasi target hingga petualangan air arung jeram yang memacu adrenalin, kami siap menghadirkan pengalaman luar biasa.
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        {servicesData.map((service) => (
+          <ServiceCard service={service} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 4: ALUR PEMESANAN MUDAH (AEO & USER TRUST)
+       ========================================================================= -->
+  <section class="section-padding" aria-labelledby="heading-alur">
+    <div class="container-xl">
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-lg-8">
+          <div class="section-badge">Alur Reservasi</div>
+          <h2 id="heading-alur" class="h1 mb-3">4 Langkah Praktis Merencanakan Acara Anda</h2>
+          <p class="text-muted-custom">
+            Tidak perlu repot mengurus administrasi dan perizinan sendiri. Tim kami mendampingi setiap tahapan dari awal hingga penutupan acara.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        
+        <div class="col-md-6 col-lg-3">
+          <div class="card-dark text-center h-100 p-4">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle text-dark fw-bold mb-3 mx-auto" style="width: 50px; height: 50px; background-color: var(--color-accent); font-size: 1.25rem;">
+              1
+            </div>
+            <h3 class="h5 text-light mb-2">Konsultasi Awal</h3>
+            <p class="small text-muted-custom mb-0">
+              Sampaikan jumlah peserta, rencana tanggal, target kegiatan, dan preferensi lokasi melalui WhatsApp kepada tim reservasi kami.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card-dark text-center h-100 p-4">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle text-dark fw-bold mb-3 mx-auto" style="width: 50px; height: 50px; background-color: var(--color-accent); font-size: 1.25rem;">
+              2
+            </div>
+            <h3 class="h5 text-light mb-2">Proposal & Rundown</h3>
+            <p class="small text-muted-custom mb-0">
+              Kami kirimkan draft penawaran resmi, breakdown rincian biaya transparan, opsi venue, dan skenario rundown detail 1x24 jam.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card-dark text-center h-100 p-4">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle text-dark fw-bold mb-3 mx-auto" style="width: 50px; height: 50px; background-color: var(--color-accent); font-size: 1.25rem;">
+              3
+            </div>
+            <h3 class="h5 text-light mb-2">Konfirmasi & DP</h3>
+            <p class="small text-muted-custom mb-0">
+              Setelah proposal disetujui, amankan tanggal dan pemesanan venue dengan Down Payment (DP) resmi serta MoU kesepakatan.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card-dark text-center h-100 p-4">
+            <div class="d-inline-flex align-items-center justify-content-center rounded-circle text-dark fw-bold mb-3 mx-auto" style="width: 50px; height: 50px; background-color: var(--color-accent); font-size: 1.25rem;">
+              4
+            </div>
+            <h3 class="h5 text-light mb-2">Pelaksanaan Acara</h3>
+            <p class="small text-muted-custom mb-0">
+              Hari-H kegiatan dipandu penuh oleh tim fasilitator profesional kami. Dokumentasi foto dan video diserahkan segera setelah acara.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 5: PREVIEW GALERI DOKUMENTASI (PRD FR-05)
+       ========================================================================= -->
+  <section class="section-padding bg-surface-alt" id="galeri" aria-labelledby="heading-galeri">
+    <div class="container-xl">
+      <div class="row align-items-end justify-content-between mb-5">
+        <div class="col-lg-8">
+          <div class="section-badge">Dokumentasi Nyata</div>
+          <h2 id="heading-galeri" class="h1 mb-2">Galeri Kegiatan di Kawasan Batu & Malang</h2>
+          <p class="text-muted-custom mb-0">
+            Intip keseruan, kekompakan, dan kehangatan rombongan peserta saat berkegiatan bersama kami di berbagai venue asri Kota Batu.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+          <a href="/galeri/" class="text-accent fw-bold text-decoration-none d-inline-flex align-items-center gap-2">
+            <span>Buka Galeri Foto Lengkap</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <GalleryGrid />
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 6: TESTIMONI KLIEN ASLI (PRD FR-01)
+       ========================================================================= -->
+  <section class="section-padding" aria-labelledby="heading-testimoni">
+    <div class="container-xl">
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-lg-8">
+          <div class="section-badge">Ulasan Klien</div>
+          <h2 id="heading-testimoni" class="h1 mb-3">Apa Kata Mereka yang Telah Berkegiatan Bersama Kami?</h2>
+          <p class="text-muted-custom">
+            Kepercayaan dan kepuasan peserta dari instansi pemerintah, BUMN, perusahaan swasta, dan institusi pendidikan adalah dedikasi utama kami.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        {testimonials.map((item) => (
+          <div class="col-lg-4 col-md-6">
+            <div class="card-dark h-100 p-4 d-flex flex-column justify-content-between">
+              <div>
+                <div class="d-flex align-items-center gap-1 text-warning mb-3" aria-label="Rating 5 dari 5 bintang">
+                  {"★".repeat(item.rating)}
+                </div>
+                <p class="text-light text-opacity-90 small fst-italic mb-4" style="line-height: 1.7;">
+                  "{item.text}"
+                </p>
+              </div>
+
+              <div class="pt-3 border-top border-dark">
+                <div class="fw-bold text-light">{item.name}</div>
+                <div class="small text-muted-custom">{item.role} &bull; {item.company}</div>
+                <span class="badge bg-black text-accent border border-secondary mt-2 small">
+                  Paket: {item.package}
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 7: RINGKASAN ARTIKEL BLOG TERBARU (PRD FR-06)
+       ========================================================================= -->
+  <section class="section-padding bg-surface-alt" id="blog" aria-labelledby="heading-blog">
+    <div class="container-xl">
+      <div class="row align-items-end justify-content-between mb-5">
+        <div class="col-lg-8">
+          <div class="section-badge">Panduan & Edukasi</div>
+          <h2 id="heading-blog" class="h1 mb-2">Artikel Seputar Outbound & Wisata Batu</h2>
+          <p class="text-muted-custom mb-0">
+            Kumpulan tips, ide rundown acara, dan pertimbangan penting sebelum Anda memesan kegiatan outbound di Kota Batu Malang.
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+          <a href="/blog/" class="text-accent fw-bold text-decoration-none d-inline-flex align-items-center gap-2">
+            <span>Lihat Semua Artikel Blog</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="row">
+        {previewArticles.map((article) => (
+          <ArticleCard article={article} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 8: FAQ PILIHAN (PRD FR-08)
+       ========================================================================= -->
+  <section class="section-padding" id="faq" aria-labelledby="heading-faq">
+    <div class="container-xl">
+      <div class="row justify-content-center mb-5 text-center">
+        <div class="col-lg-8">
+          <div class="section-badge">Tanya Jawab</div>
+          <h2 id="heading-faq" class="h1 mb-3">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+          <p class="text-muted-custom">
+            Jawaban langsung untuk pertanyaan umum seputar lokasi kegiatan, jumlah peserta, kustomisasi paket, dan prosedur reservasi.
+          </p>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <FAQAccordion faqs={homepageFaqs} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SECTION 9: CTA PENUTUP (PRD FR-01 & FR-07)
+       ========================================================================= -->
+  <section class="section-padding position-relative overflow-hidden" aria-label="Ajakan Konsultasi Terakhir">
+    <div class="container-xl">
+      <div class="p-4 p-md-5 rounded-4 text-center position-relative overflow-hidden border" style="background: radial-gradient(circle at 50% 0%, rgba(200, 169, 106, 0.18) 0%, rgba(20, 20, 20, 0.95) 75%), #141414; border-color: rgba(200, 169, 106, 0.35) !important;">
+        
+        <div class="section-badge mx-auto mb-3">
+          Mulai Rencanakan Sekarang
+        </div>
+
+        <h2 class="display-5 fw-bold text-light mb-3">
+          Siap Menciptakan Momen Outbound Tak Terlupakan di Batu Malang?
+        </h2>
+
+        <p class="text-muted-custom mx-auto mb-4" style="max-width: 680px; font-size: 1.1rem;">
+          Konsultasikan rencana kegiatan, jumlah peserta, dan target acara Anda bersama tim ahli kami. Kami siapkan rancangan program terbaik dan proposal penawaran harga tanpa dipungut biaya.
+        </p>
+
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-4">
+          <WhatsAppButton
+            variant="gold"
+            size="lg"
+            customMessage="Halo Admin Batu Outbound, saya ingin konsultasi langsung untuk kegiatan tim kami di Batu Malang."
+            ariaLabel="Chat WhatsApp untuk konsultasi outbound Batu Malang"
+          >
+            Chat WhatsApp: 0812-1736-6600
+          </WhatsAppButton>
+
+          <a href={`tel:${siteConfig.phoneFormatted.replace(/\s+/g, '')}`} class="btn-outline-gold py-3 px-4 fs-6">
+            Hubungi via Telepon
+          </a>
+        </div>
+
+        <div class="small text-muted-custom">
+          ⏱ Respon Cepat Setiap Hari (07.30 - 21.00 WIB) &bull; 📍 Melayani Seluruh Area Kota Batu & Malang Raya
+        </div>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,114 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import FAQAccordion from "../components/FAQAccordion.astro";
+import { homepageFaqs } from "../data/faq";
+import { siteConfig } from "../data/site";
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  generateWebPageSchema,
+  generateBreadcrumbSchema,
+  generateFAQSchema
+} from "../utils/schema";
+
+const pageTitle = "FAQ Outbound Batu Malang | Pertanyaan yang Sering Diajukan";
+const pageDescription = "Temukan jawaban lengkap seputar lokasi outbound di Batu Malang, kapasitas rombongan, kustomisasi rundown, fasilitas paket, dan alur pembayaran.";
+const pageUrl = `${siteConfig.url}/faq/`;
+
+const breadcrumbItems = [
+  { name: "FAQ", url: pageUrl }
+];
+
+// Additional detailed FAQs for the dedicated FAQ page
+const allFaqs = [
+  ...homepageFaqs,
+  {
+    id: "faq-dp-refund",
+    question: "Apakah uang muka (DP) bisa dikembalikan jika terjadi pembatalan kegiatan?",
+    answer: "Kebijakan pembatalan kami bersifat fleksibel. Jika pembatalan diajukan minimal 14 hari sebelum hari H, DP dapat dialihkan untuk jadwal baru (*reschedule*) tanpa hangus. Pembatalan sepihak dalam waktu kurang dari 7 hari akan dipotong biaya operasional yang sudah disetorkan kepada pengelola venue atau pihak katering."
+  },
+  {
+    id: "faq-usia-peserta",
+    question: "Apakah anak-anak dan lansia aman mengikuti outbound di Batu?",
+    answer: "Sangat aman. Kami membedakan kategori kegiatan antara Fun Games ramah keluarga dan Team Building korporasi. Untuk keluarga, seluruh permainan dirancang santai tanpa rintangan fisik ekstrem dan didampingi fasilitator yang ramah serta sabar."
+  },
+  {
+    id: "faq-transportasi",
+    question: "Apakah Batu Outbound Adventure menyediakan transportasi bus jemputan?",
+    answer: "Kami dapat memfasilitasi kebutuhan transportasi armada pariwisata (HiAce, Medium Bus, maupun Big Bus) melalui kemitraan PO bus terpercaya di Jawa Timur dengan titik jemput dari kota asal Anda (seperti Surabaya, Sidoarjo, Malang, atau daerah lain)."
+  },
+  {
+    id: "faq-dokumentasi",
+    question: "Berapa lama file dokumentasi foto dan video diserahkan setelah acara?",
+    answer: "File dokumentasi foto yang telah dipilih dan diedit ringan akan diunggah ke Google Drive dalam waktu 1-2 hari kerja setelah acara selesai, sehingga dapat langsung dibagikan kepada seluruh peserta."
+  }
+];
+
+const schemas = [
+  generateOrganizationSchema(),
+  generateWebSiteSchema(),
+  generateWebPageSchema({
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl
+  }),
+  generateBreadcrumbSchema(breadcrumbItems),
+  generateFAQSchema(allFaqs)
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemas={schemas}
+>
+  <Breadcrumb items={breadcrumbItems} />
+
+  <!-- Page Header -->
+  <section class="py-5 position-relative overflow-hidden" style="background-color: #0c0c0c; border-bottom: 1px solid var(--color-border);">
+    <div class="container-xl">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="section-badge">Pusat Bantuan & Tanya Jawab</div>
+          <h1 class="display-5 fw-bold text-light mb-3">Pertanyaan yang Sering Diajukan (FAQ)</h1>
+          <p class="lead text-muted-custom mb-0">
+            Kumpulan jawaban transparan mengenai pelaksanaan outbound, pemilihan venue di kawasan Batu Malang, biaya, dan tata cara reservasi.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion Section -->
+  <section class="section-padding">
+    <div class="container-xl">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          
+          <div class="mb-5">
+            <FAQAccordion faqs={allFaqs} accordionId="faqFullAccordion" />
+          </div>
+
+          <!-- Question still unanswered card -->
+          <div class="p-4 p-md-5 rounded-4 text-center border border-dark" style="background-color: var(--color-surface);">
+            <h2 class="h3 text-light mb-2">Punya Pertanyaan Khusus yang Belum Terjawab?</h2>
+            <p class="small text-muted-custom mx-auto mb-4" style="max-width: 600px;">
+              Customer service kami siap melayani dan memberikan rekomendasi terbaik untuk kegiatan rombongan Anda setiap hari.
+            </p>
+            <WhatsAppButton
+              variant="gold"
+              size="md"
+              customMessage="Halo Admin, saya ingin menanyakan hal khusus seputar paket outbound di Batu Malang."
+            >
+              Tanyakan Langsung via WhatsApp
+            </WhatsAppButton>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

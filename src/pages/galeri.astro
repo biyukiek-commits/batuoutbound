@@ -1,0 +1,174 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { galleryData } from "../data/gallery";
+import { siteConfig } from "../data/site";
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  generateWebPageSchema,
+  generateBreadcrumbSchema
+} from "../utils/schema";
+
+const pageTitle = "Galeri Dokumentasi Outbound Batu Malang | Foto Kegiatan Nyata";
+const pageDescription = "Lihat dokumentasi foto kegiatan outbound, team building, rafting Kaliwatu, paintball, dan family gathering di kawasan sejuk Batu Malang.";
+const pageUrl = `${siteConfig.url}/galeri/`;
+
+const breadcrumbItems = [
+  { name: "Galeri Dokumentasi", url: pageUrl }
+];
+
+const schemas = [
+  generateOrganizationSchema(),
+  generateWebSiteSchema(),
+  generateWebPageSchema({
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl
+  }),
+  generateBreadcrumbSchema(breadcrumbItems)
+];
+
+const categories = [
+  { id: "all", label: "Semua Kategori" },
+  { id: "team-building", label: "Team Building" },
+  { id: "gathering", label: "Gathering" },
+  { id: "rafting", label: "Rafting Kaliwatu" },
+  { id: "adventure", label: "Paintball & Adventure" }
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemas={schemas}
+>
+  <Breadcrumb items={breadcrumbItems} />
+
+  <!-- Page Header -->
+  <section class="py-5 position-relative overflow-hidden" style="background-color: #0c0c0c; border-bottom: 1px solid var(--color-border);">
+    <div class="container-xl">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="section-badge">Dokumentasi Nyata di Lapangan</div>
+          <h1 class="display-5 fw-bold text-light mb-3">Galeri Kegiatan Outbound Batu Malang</h1>
+          <p class="lead text-muted-custom mb-0">
+            Kumpulan potret momen keceriaan, kehangatan, dinamika kelompok, dan adrenalin peserta saat berkegiatan bersama kami di berbagai venue alam terbuka Kota Batu.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section with Filter -->
+  <section class="section-padding">
+    <div class="container-xl">
+      
+      <!-- Interactive Filter Buttons (PRD FR-05 Lightweight JS) -->
+      <div class="d-flex flex-wrap align-items-center justify-content-center gap-2 mb-5">
+        {categories.map((cat, index) => (
+          <button
+            type="button"
+            class={`btn btn-sm px-3 py-2 rounded-pill filter-btn ${index === 0 ? "btn-gold active" : "btn-outline-gold"}`}
+            data-filter={cat.id}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="row g-4" id="galleryContainer">
+        {galleryData.map((item, index) => (
+          <div class="col-lg-4 col-md-6 gallery-card" data-category={item.category}>
+            <div class="card-dark p-0 overflow-hidden h-100 border border-dark">
+              
+              <div class="ratio ratio-4x3 position-relative overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.altText}
+                  loading={index < 3 ? "eager" : "lazy"}
+                  width="600"
+                  height="450"
+                  class="w-100 h-100 object-fit-cover gallery-photo"
+                />
+                <div class="position-absolute top-0 start-0 m-3">
+                  <span class="badge bg-black text-accent border border-secondary small">
+                    📍 {item.location}
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-3">
+                <div class="d-flex align-items-center justify-content-between mb-1">
+                  <span class="text-xs text-accent fw-bold text-uppercase" style="font-size: 0.75rem;">
+                    {item.categoryLabel}
+                  </span>
+                </div>
+                <h3 class="h5 text-light mb-1">{item.title}</h3>
+                <p class="small text-muted-custom mb-0">{item.caption}</p>
+              </div>
+
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Bottom WhatsApp CTA -->
+      <div class="p-4 p-md-5 rounded-4 text-center border border-dark mt-5" style="background-color: var(--color-surface);">
+        <h3 class="h4 text-light mb-2">Tertarik Mengadakan Acara Seru Seperti Ini?</h3>
+        <p class="text-muted-custom small mx-auto mb-4" style="max-width: 600px;">
+          Setiap kegiatan kami sertakan dokumentasi foto profesional untuk mengabadikan momen berharga rombongan Anda.
+        </p>
+        <WhatsAppButton
+          variant="gold"
+          size="md"
+          customMessage="Halo Admin, saya melihat dokumentasi galeri kegiatan outbound Batu dan tertarik ingin konsultasi."
+        >
+          Konsultasi Jadwal & Acara via WhatsApp
+        </WhatsAppButton>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Client-side filter script (Lightweight, No external libs) -->
+  <script>
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const galleryCards = document.querySelectorAll<HTMLElement>('.gallery-card');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        // Toggle active button style
+        filterButtons.forEach((b) => {
+          b.classList.remove('btn-gold', 'active');
+          b.classList.add('btn-outline-gold');
+        });
+        btn.classList.remove('btn-outline-gold');
+        btn.classList.add('btn-gold', 'active');
+
+        const filterValue = btn.getAttribute('data-filter');
+
+        galleryCards.forEach((card) => {
+          const cardCategory = card.getAttribute('data-category');
+          if (filterValue === 'all' || cardCategory === filterValue) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+
+  <style>
+    .gallery-photo {
+      transition: transform 0.4s ease;
+    }
+    .card-dark:hover .gallery-photo {
+      transform: scale(1.05);
+    }
+  </style>
+</BaseLayout>
+

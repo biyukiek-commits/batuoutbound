@@ -1,0 +1,238 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { siteConfig } from "../data/site";
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  generateWebPageSchema,
+  generateBreadcrumbSchema
+} from "../utils/schema";
+
+const pageTitle = "Kontak & Reservasi Outbound Batu Malang | Hubungi Kami";
+const pageDescription = "Hubungi tim Batu Outbound Adventure via WhatsApp 081217366600 untuk konsultasi gratis, permintaan proposal harga, survei lokasi, dan reservasi kegiatan.";
+const pageUrl = `${siteConfig.url}/kontak/`;
+
+const breadcrumbItems = [
+  { name: "Kontak & Reservasi", url: pageUrl }
+];
+
+const schemas = [
+  generateOrganizationSchema(),
+  generateWebSiteSchema(),
+  generateWebPageSchema({
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl
+  }),
+  generateBreadcrumbSchema(breadcrumbItems)
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemas={schemas}
+>
+  <Breadcrumb items={breadcrumbItems} />
+
+  <!-- Page Header -->
+  <section class="py-5 position-relative overflow-hidden" style="background-color: #0c0c0c; border-bottom: 1px solid var(--color-border);">
+    <div class="container-xl">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="section-badge">Layanan Konsultasi & Reservasi</div>
+          <h1 class="display-5 fw-bold text-light mb-3">Hubungi Tim {siteConfig.name}</h1>
+          <p class="lead text-muted-custom mb-0">
+            Kami siap membantu merencanakan kegiatan outbound, gathering kantor, reuni, atau petualangan alam di kawasan Batu Malang dengan proposal penawaran transparan.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Details & Direct WhatsApp Generator -->
+  <section class="section-padding">
+    <div class="container-xl">
+      <div class="row g-5">
+        
+        <!-- Contact Information -->
+        <div class="col-lg-5">
+          <div class="card-dark p-4 p-md-5 border border-dark mb-4">
+            <h2 class="h3 text-light mb-4">Saluran Kontak Resmi</h2>
+            
+            <div class="d-flex align-items-start gap-3 mb-4">
+              <div class="feature-icon-box mb-0" style="width: 44px; height: 44px; min-width: 44px;">
+                💬
+              </div>
+              <div>
+                <h3 class="h6 text-accent mb-1">WhatsApp & Telepon:</h3>
+                <a href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer" class="text-light fw-bold fs-5 text-decoration-none">
+                  {siteConfig.phoneFormatted}
+                </a>
+                <p class="small text-muted-custom mt-1 mb-0">Layanan chat respon cepat 7 hari seminggu.</p>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-start gap-3 mb-4">
+              <div class="feature-icon-box mb-0" style="width: 44px; height: 44px; min-width: 44px;">
+                ✉️
+              </div>
+              <div>
+                <h3 class="h6 text-accent mb-1">Email Resmi:</h3>
+                <a href={`mailto:${siteConfig.email}`} class="text-light text-decoration-none">
+                  {siteConfig.email}
+                </a>
+                <p class="small text-muted-custom mt-1 mb-0">Untuk surat penawaran resmi dan administrasi instansi.</p>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-start gap-3 mb-4">
+              <div class="feature-icon-box mb-0" style="width: 44px; height: 44px; min-width: 44px;">
+                ⏱
+              </div>
+              <div>
+                <h3 class="h6 text-accent mb-1">Jam Operasional:</h3>
+                <p class="text-light small mb-0">{siteConfig.operationalHours}</p>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-start gap-3">
+              <div class="feature-icon-box mb-0" style="width: 44px; height: 44px; min-width: 44px;">
+                📍
+              </div>
+              <div>
+                <h3 class="h6 text-accent mb-1">Area Operasional:</h3>
+                <p class="text-light small mb-0">Kota Batu & Malang Raya, Jawa Timur, Indonesia</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="p-4 rounded-3 border border-dark" style="background-color: var(--color-surface-2);">
+            <h3 class="h6 text-accent fw-bold text-uppercase mb-2">Panduan Pengajuan Proposal Resmi</h3>
+            <p class="small text-muted-custom mb-0">
+              Bagi instansi pemerintah atau korporat yang membutuhkan surat penawaran, susunan panitia, dan invoice resmi bertanda tangan basah/digital, silakan infokan nama instansi serta jumlah peserta melalui WhatsApp kami.
+            </p>
+          </div>
+        </div>
+
+        <!-- WhatsApp Interactive Message Helper (No DB, pure client-side conversion) -->
+        <div class="col-lg-7">
+          <div class="card-dark p-4 p-md-5 border border-dark">
+            <h2 class="h3 text-light mb-2">Formulir Pesan Konsultasi Cepat</h2>
+            <p class="small text-muted-custom mb-4">
+              Isi data rencana kegiatan Anda di bawah ini untuk menghasilkan pesan WhatsApp otomatis yang siap dikirim langsung ke tim kami:
+            </p>
+
+            <form id="contactForm" onsubmit="event.preventDefault(); sendCustomWhatsApp();">
+              <div class="mb-3">
+                <label for="clientName" class="form-label small text-light fw-bold">Nama Anda / Penanggung Jawab:</label>
+                <input
+                  type="text"
+                  id="clientName"
+                  class="form-control bg-dark border-secondary text-light"
+                  placeholder="Contoh: Budi Santoso"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="clientOrg" class="form-label small text-light fw-bold">Nama Instansi / Perusahaan / Komunitas:</label>
+                <input
+                  type="text"
+                  id="clientOrg"
+                  class="form-control bg-dark border-secondary text-light"
+                  placeholder="Contoh: PT Sumber Makmur Surabaya / Paguyuban Keluarga"
+                />
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label for="participantCount" class="form-label small text-light fw-bold">Perkiraan Jumlah Peserta:</label>
+                  <input
+                    type="number"
+                    id="participantCount"
+                    class="form-control bg-dark border-secondary text-light"
+                    placeholder="Contoh: 45"
+                    min="1"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="eventDate" class="form-label small text-light fw-bold">Rencana Tanggal Acara:</label>
+                  <input
+                    type="date"
+                    id="eventDate"
+                    class="form-control bg-dark border-secondary text-light"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="packageInterest" class="form-label small text-light fw-bold">Pilihan Program yang Diminati:</label>
+                <select id="packageInterest" class="form-select bg-dark border-secondary text-light">
+                  <option value="Team Building Perusahaan">Outbound Team Building Perusahaan</option>
+                  <option value="Family / Community Gathering">Family & Community Fun Gathering</option>
+                  <option value="Outbound Edukasi Siswa">Outbound Edukasi & Karakter Siswa</option>
+                  <option value="Outbound + Rafting Kaliwatu">Paket Outbound + Rafting Kaliwatu</option>
+                  <option value="Paintball Wargame Tactical">Outbound + Paintball War Game</option>
+                  <option value="Gathering Menginap 2D1N">Paket Menginap 2 Hari 1 Malam (2D1N)</option>
+                  <option value="Paket Kustom">Paket Kustom Lainnya</option>
+                </select>
+              </div>
+
+              <div class="mb-4">
+                <label for="extraNotes" class="form-label small text-light fw-bold">Catatan Tambahan / Kebutuhan Khusus:</label>
+                <textarea
+                  id="extraNotes"
+                  rows="3"
+                  class="form-control bg-dark border-secondary text-light"
+                  placeholder="Misal: Termasuk makan siang prasmanan, butuh penginapan villa, atau request lokasi di Coban Rondo."
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                class="btn-gold w-100 py-3 fs-6 justify-content-center"
+              >
+                <span>💬 Kirim Rincian Acara via WhatsApp</span>
+              </button>
+            </form>
+
+            <div class="text-center small text-muted-custom mt-3">
+              *Tombol di atas akan membuka aplikasi WhatsApp Anda dengan pesan yang sudah terformat rapi.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive script to launch WhatsApp with clean encoding -->
+  <script is:inline>
+    function sendCustomWhatsApp() {
+      const name = document.getElementById('clientName').value.trim();
+      const org = document.getElementById('clientOrg').value.trim();
+      const count = document.getElementById('participantCount').value.trim();
+      const date = document.getElementById('eventDate').value;
+      const program = document.getElementById('packageInterest').value;
+      const notes = document.getElementById('extraNotes').value.trim();
+
+      let msg = `Halo Admin Batu Outbound, saya ingin konsultasi kegiatan:\n`;
+      msg += `• Nama: ${name}\n`;
+      if (org) msg += `• Instansi: ${org}\n`;
+      if (count) msg += `• Jumlah Peserta: ${count} orang\n`;
+      if (date) msg += `• Rencana Tanggal: ${date}\n`;
+      msg += `• Program: ${program}\n`;
+      if (notes) msg += `• Catatan: ${notes}\n`;
+      msg += `Mohon informasi ketersediaan jadwal dan rancangan proposal penawarannya. Terima kasih!`;
+
+      const encoded = encodeURIComponent(msg);
+      window.open(`https://wa.me/6281217366600?text=${encoded}`, '_blank');
+    }
+  </script>
+</BaseLayout>
+

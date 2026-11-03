@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import { siteConfig } from "../data/site";
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  generateWebPageSchema,
+  generateBreadcrumbSchema
+} from "../utils/schema";
+
+const pageTitle = "Kebijakan Privasi | Batu Outbound Adventure";
+const pageDescription = "Kebijakan privasi Batu Outbound Adventure menjelaskan bagaimana kami mengelola informasi saat Anda menggunakan website dan berkomunikasi via WhatsApp.";
+const pageUrl = `${siteConfig.url}/kebijakan-privasi/`;
+
+const breadcrumbItems = [
+  { name: "Kebijakan Privasi", url: pageUrl }
+];
+
+const schemas = [
+  generateOrganizationSchema(),
+  generateWebSiteSchema(),
+  generateWebPageSchema({
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl
+  }),
+  generateBreadcrumbSchema(breadcrumbItems)
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemas={schemas}
+>
+  <Breadcrumb items={breadcrumbItems} />
+
+  <section class="section-padding pt-4">
+    <div class="container-xl">
+      <div class="row justify-content-center">
+        <div class="col-lg-9 col-xl-8">
+          
+          <div class="section-badge mb-3">Informasi Privasi & Keamanan</div>
+          <h1 class="display-5 fw-bold text-light mb-4">Kebijakan Privasi</h1>
+          <p class="text-muted-custom small mb-4 pb-3 border-bottom border-dark">
+            Terakhir diperbarui: 2 November 2026
+          </p>
+
+          <div class="text-light" style="line-height: 1.8;">
+            <p>
+              Selamat datang di <strong>{siteConfig.name}</strong>. Kami menghargai privasi setiap pengunjung situs kami. Dokumen Kebijakan Privasi ini menguraikan jenis informasi yang kami kumpulkan dan bagaimana informasi tersebut diperlakukan sesuai dengan prinsip website statis tanpa database.
+            </p>
+
+            <h2 class="h4 text-accent mt-5 mb-3">1. Arsitektur Tanpa Database (No Database)</h2>
+            <p class="text-muted-custom">
+              Website ini dibangun menggunakan arsitektur statis (*static-first*) tanpa sistem database backend. Kami tidak menyediakan form registrasi, login pengguna, atau penyimpanan basis data identitas pengunjung di server web kami.
+            </p>
+
+            <h2 class="h4 text-accent mt-5 mb-3">2. Komunikasi Melalui WhatsApp</h2>
+            <p class="text-muted-custom">
+              Kanal konversi dan konsultasi utama kami menggunakan aplikasi WhatsApp resmi ke nomor <strong>{siteConfig.phoneFormatted}</strong>. Ketika Anda mengeklik tombol WhatsApp, percakapan berlangsung di dalam infrastruktur terenkripsi milik WhatsApp (Meta Platforms, Inc.). Informasi yang Anda kirimkan (seperti nama, nomor telepon, dan rincian rombongan kegiatan) hanya digunakan oleh tim reservasi kami untuk menyusun proposal penawaran dan koordinasi kegiatan outbound Anda. Kami tidak pernah membagikan atau menjual data kontak Anda kepada pihak ketiga mana pun.
+            </p>
+
+            <h2 class="h4 text-accent mt-5 mb-3">3. File Log dan Analitik Standar</h2>
+            <p class="text-muted-custom">
+              Seperti kebanyakan penyedia hosting web standar, server kami secara otomatis dapat mencatat permintaan web standar (seperti alamat IP anonim, tipe peramban/browser, halaman rujukan, dan waktu akses) semata-mata untuk tujuan pemeliharaan keandalan teknis dan keamanan infrastruktur server.
+            </p>
+
+            <h2 class="h4 text-accent mt-5 mb-3">4. Hak Pengguna</h2>
+            <p class="text-muted-custom">
+              Anda berhak setiap saat meminta penghapusan riwayat percakapan atau data kontak penawaran yang tersimpan di perangkat komunikasi tim customer service kami dengan mengirimkan pesan WhatsApp ke nomor resmi kami.
+            </p>
+
+            <h2 class="h4 text-accent mt-5 mb-3">5. Kontak Kami</h2>
+            <p class="text-muted-custom mb-0">
+              Jika Anda memiliki pertanyaan seputar Kebijakan Privasi ini, silakan hubungi kami via email di <a href={`mailto:${siteConfig.email}`} class="text-accent">{siteConfig.email}</a> atau melalui nomor WhatsApp <strong>{siteConfig.phoneFormatted}</strong>.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

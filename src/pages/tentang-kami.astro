@@ -1,0 +1,306 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { siteConfig } from "../data/site";
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  generateWebPageSchema,
+  generateBreadcrumbSchema
+} from "../utils/schema";
+
+const pageTitle = "Tentang Kami | Penyelenggara Outbound Batu Malang";
+const pageDescription = "Kenali profil penyelenggara, standar pelayanan, nilai keselamatan, dan pendekatan kegiatan outbound edukatif di kawasan sejuk Kota Batu dan Malang.";
+const pageUrl = `${siteConfig.url}/tentang-kami/`;
+
+const breadcrumbItems = [
+  { name: "Tentang Kami", url: pageUrl }
+];
+
+const schemas = [
+  generateOrganizationSchema(),
+  generateWebSiteSchema(),
+  generateWebPageSchema({
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl
+  }),
+  generateBreadcrumbSchema(breadcrumbItems)
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemas={schemas}
+>
+  <!-- Breadcrumb -->
+  <Breadcrumb items={breadcrumbItems} />
+
+  <!-- Page Header -->
+  <section class="py-5 position-relative overflow-hidden" style="background-color: #0c0c0c; border-bottom: 1px solid var(--color-border);">
+    <div class="container-xl">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="section-badge">Profil & Integritas Penyelenggara</div>
+          <h1 class="display-5 fw-bold text-light mb-3">Tentang {siteConfig.name}</h1>
+          <p class="lead text-muted-custom mb-0">
+            Mitra penyelenggara outbound, team building, dan gathering profesional yang menghadirkan pengalaman luar ruang berkesan, terencana, dan bermakna di kawasan sejuk Batu Malang.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Profil Usaha & Latar Belakang -->
+  <section class="section-padding" aria-labelledby="heading-profil">
+    <div class="container-xl">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="section-badge">Dedikasi Layanan</div>
+          <h2 id="heading-profil" class="h1 text-light mb-3">Solusi Terpercaya untuk Pengembangan SDM dan Kebersamaan</h2>
+          <p class="text-muted-custom mb-3">
+            {siteConfig.name} lahir dari semangat untuk menyuguhkan kegiatan luar ruang yang tidak sekadar mengisi waktu liburan, tetapi memberikan dampak positif jangka panjang bagi dinamika kerja tim, rasa saling percaya, dan kebersamaan keluarga.
+          </p>
+          <p class="text-muted-custom mb-4">
+            Berbasis di kawasan sejuk Kota Batu, Jawa Timur—destinasi wisata alam terkemuka di Indonesia—kami memanfaatkan kontur alam pegunungan, hutan pinus asri, serta aliran sungai yang jernih sebagai laboratorium alam terbuka bagi pembelajaran berbasis pengalaman (*experiential learning*).
+          </p>
+
+          <div class="p-3 rounded-3 border border-dark mb-4" style="background-color: var(--color-surface);">
+            <div class="d-flex align-items-center gap-3">
+              <div class="feature-icon-box mb-0" style="width: 48px; height: 48px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="h6 text-light mb-1">Standar Keselamatan dan Legalitas Jelas</h3>
+                <p class="small text-muted-custom mb-0">Seluruh simulasi dipandu Master Game berlisensi dengan peralatan SNI dan tim P3K siaga.</p>
+              </div>
+            </div>
+          </div>
+
+          <WhatsAppButton
+            variant="gold"
+            size="md"
+            customMessage="Halo Admin, saya ingin mengetahui lebih lanjut tentang profil dan program Batu Outbound."
+          >
+            Konsultasikan Rencana Acara Anda
+          </WhatsAppButton>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="position-relative rounded-4 overflow-hidden border border-dark shadow-lg">
+            <img
+              src="/images/gallery/team-building-hutan-pinus.webp"
+              alt="Fasilitator memandu kegiatan outbound di kawasan hutan pinus Kota Batu"
+              class="w-100 h-100 object-fit-cover"
+              width="600"
+              height="450"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visi & Misi -->
+  <section class="section-padding bg-surface-alt" aria-labelledby="heading-visimisi">
+    <div class="container-xl">
+      <div class="row g-4">
+        
+        <div class="col-lg-6">
+          <div class="card-dark h-100 p-4 p-md-5">
+            <div class="feature-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <h3 class="h3 text-light mb-3">Visi Kami</h3>
+            <p class="text-muted-custom mb-0">
+              Menjadi mitra penyelenggara kegiatan outbound, team building, dan experiential tourism terdepan di Jawa Timur yang dikenal atas profesionalitas, keselamatan tanpa kompromi, serta program yang berdampak nyata bagi penguatan karakter dan keharmonisan organisasi.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card-dark h-100 p-4 p-md-5">
+            <div class="feature-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+            <h3 class="h3 text-light mb-3">Misi Kami</h3>
+            <ul class="text-muted-custom small ps-3 mb-0" style="line-height: 1.8;">
+              <li class="mb-2">Merancang program simulasi yang adaptif terhadap kebutuhan spesifik dan nilai budaya setiap klien.</li>
+              <li class="mb-2">Menjamin keselamatan dan kenyamanan seluruh peserta melalui SOP operasional dan manajemen risiko yang ketat.</li>
+              <li class="mb-2">Menyediakan fasilitator berkualifikasi yang komunikatif, ramah, dan berorientasi pada kepuasan peserta.</li>
+              <li>Mendukung ekosistem pariwisata ramah lingkungan dan memberdayakan komunitas lokal di Kota Batu dan Malang.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Nilai & Standar Pelayanan -->
+  <section class="section-padding" aria-labelledby="heading-nilai">
+    <div class="container-xl">
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-lg-8">
+          <div class="section-badge">Standar Kerja</div>
+          <h2 id="heading-nilai" class="h1 mb-3">Nilai Pokok yang Kami Junjung Tinggi</h2>
+          <p class="text-muted-custom">
+            Setiap acara yang kami rancang dilandasi oleh empat komitmen utama untuk menjaga kepercayaan dan kenyamanan Anda.
+          </p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        
+        <div class="col-lg-3 col-md-6">
+          <div class="card-dark text-center p-4">
+            <div class="feature-icon-box mx-auto">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <h3 class="h5 text-light mb-2">Safety First</h3>
+            <p class="small text-muted-custom mb-0">
+              Pemeriksaan kelaikan perlengkapan, briefing SOP ketat, dan tim medis pendukung di setiap kegiatan.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="card-dark text-center p-4">
+            <div class="feature-icon-box mx-auto">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m9 12 2 2 4-4"></path>
+              </svg>
+            </div>
+            <h3 class="h5 text-light mb-2">Integritas & Transparansi</h3>
+            <p class="small text-muted-custom mb-0">
+              Rincian biaya jelas tanpa biaya siluman tersembunyi, fasilitas sesuai MoU yang disepakati.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="card-dark text-center p-4">
+            <div class="feature-icon-box mx-auto">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 class="h5 text-light mb-2">Fasilitator Empatik</h3>
+            <p class="small text-muted-custom mb-0">
+              Tim lapangan yang bersahabat, penuh energi positif, dan sabar membimbing peserta dari berbagai usia.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="card-dark text-center p-4">
+            <div class="feature-icon-box mx-auto">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <h3 class="h5 text-light mb-2">Program Kustom</h3>
+            <p class="small text-muted-custom mb-0">
+              Rundown fleksibel disesuaikan dengan sasaran pelatihan, ketersediaan waktu, dan alokasi anggaran.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Area Layanan Resmi -->
+  <section class="section-padding bg-surface-alt" aria-labelledby="heading-area">
+    <div class="container-xl">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="section-badge">Cakupan Wilayah</div>
+          <h2 id="heading-area" class="h1 text-light mb-3">Wilayah Layanan di Kawasan Batu & Malang</h2>
+          <p class="text-muted-custom mb-4">
+            Kami melayani kegiatan outbound dan gathering di seluruh area wisata terkemuka di wilayah Kota Batu dan Malang Raya, dengan kemitraan resmi bersama pengelola venue:
+          </p>
+          
+          <ul class="list-unstyled text-light small mb-4" style="line-height: 2;">
+            <li class="d-flex align-items-center gap-2">
+              <span class="text-accent fw-bold">📍</span>
+              <strong>Kawasan Hutan Pinus Coban Rondo</strong> (Outbound Ground & Paintball Arena)
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <span class="text-accent fw-bold">📍</span>
+              <strong>Songgoriti Park & Outbound Camp Ground</strong>
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <span class="text-accent fw-bold">📍</span>
+              <strong>Kusuma Agrowisata Outdoor Ground Batu</strong>
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <span class="text-accent fw-bold">📍</span>
+              <strong>Basecamp Rafting Sungai Kaliwatu & Sahabat Air Batu</strong>
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <span class="text-accent fw-bold">📍</span>
+              <strong>Taman Rekreasi Selecta Green Lawn Area</strong>
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <span class="text-accent fw-bold">📍</span>
+              <strong>Bumi Perkemahan Coban Talun & Pujon Malang Raya</strong>
+            </li>
+          </ul>
+
+          <div class="d-flex flex-wrap gap-3">
+            <WhatsAppButton
+              variant="gold"
+              size="md"
+              customMessage="Halo Admin, saya ingin menanyakan ketersediaan lokasi outbound di Batu Malang."
+            >
+              Tanya Ketersediaan Lokasi
+            </WhatsAppButton>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card-dark p-4 border border-dark">
+            <h3 class="h4 text-light mb-3">Informasi Operasional Resmi</h3>
+            <div class="small text-muted-custom mb-3">
+              <strong>Nama Brand:</strong> {siteConfig.name}
+            </div>
+            <div class="small text-muted-custom mb-3">
+              <strong>Hotline WhatsApp:</strong> <a href={`https://wa.me/${siteConfig.whatsappNumber}`} class="text-accent fw-bold">{siteConfig.phoneFormatted}</a>
+            </div>
+            <div class="small text-muted-custom mb-3">
+              <strong>Email Bisnis:</strong> {siteConfig.email}
+            </div>
+            <div class="small text-muted-custom mb-3">
+              <strong>Jam Layanan Konsultasi:</strong> {siteConfig.operationalHours}
+            </div>
+            <div class="small text-muted-custom mb-0">
+              <strong>Alamat Kantor & Operasional:</strong> {siteConfig.address.fullAddress}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

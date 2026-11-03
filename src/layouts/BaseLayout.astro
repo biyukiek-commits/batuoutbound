@@ -1,0 +1,47 @@
+---
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/global.css";
+import SeoHead, { type Props as SeoProps } from "../components/SeoHead.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import FloatingWhatsApp from "../components/FloatingWhatsApp.astro";
+
+export interface Props extends SeoProps {
+  hideFloatingWa?: boolean;
+}
+
+const { hideFloatingWa = false, ...seoProps } = Astro.props;
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <SeoHead {...seoProps} />
+  </head>
+  <body>
+    <!-- Skip to main content for accessibility (WCAG AA) -->
+    <a href="#main-content" class="visually-hidden-focusable btn btn-primary position-absolute top-0 start-0 m-3 z-3">
+      Lewati ke konten utama
+    </a>
+
+    <!-- Global Navigation -->
+    <Navbar />
+
+    <!-- Main Content Slot -->
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <!-- Global Footer -->
+    <Footer />
+
+    <!-- Floating WhatsApp CTA (PRD FR-07) -->
+    {!hideFloatingWa && <FloatingWhatsApp />}
+
+    <!-- Bootstrap Bundle JS for interactive offcanvas and accordion -->
+    <script>
+      import "bootstrap/dist/js/bootstrap.bundle.min.js";
+    </script>
+  </body>
+</html>
+

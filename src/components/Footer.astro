@@ -1,0 +1,80 @@
+---
+import { siteConfig } from "../data/site";
+import WhatsAppButton from "./WhatsAppButton.astro";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer-custom" aria-label="Informasi Footer Situs">
+  <div class="container-xl">
+    <!-- Top Row: Brand & Quick Navigation -->
+    <div class="row align-items-center justify-content-between gy-3 pb-3 border-bottom border-dark">
+      
+      <!-- Left: Compact Brand & Summary -->
+      <div class="col-lg-5 col-md-6">
+        <a class="d-inline-flex align-items-center gap-2 mb-2 text-decoration-none" href="/" aria-label={`${siteConfig.name} - Beranda`}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent" aria-hidden="true">
+            <path d="m8 3 4 8 5-5 5 15H2L8 3z"></path>
+          </svg>
+          <span class="fs-5 fw-bold text-light">BATU<span class="text-accent">OUTBOUND</span></span>
+        </a>
+        <p class="text-muted-custom small mb-2" style="max-width: 420px; line-height: 1.5;">
+          Layanan outbound, team building, dan family gathering profesional di kawasan sejuk Kota Batu & Malang Raya.
+        </p>
+        <div class="d-flex flex-wrap align-items-center gap-2 small">
+          <a href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer" class="text-accent fw-bold text-decoration-none">
+            💬 {siteConfig.phoneFormatted}
+          </a>
+          <span class="text-secondary">•</span>
+          <span class="text-muted-custom">Batu & Malang, Jawa Timur</span>
+        </div>
+      </div>
+
+      <!-- Right: Compact Inline Navigation & Action -->
+      <div class="col-lg-7 col-md-6 text-md-end">
+        <nav aria-label="Navigasi Footer" class="mb-3">
+          <ul class="list-inline mb-0 small">
+            {siteConfig.navLinks.map((link) => (
+              <li class="list-inline-item me-3">
+                <a href={link.href} class="text-muted-custom hover-accent text-decoration-none">
+                  {link.name}
+                </a>
+              </li>
+            ))}
+            <li class="list-inline-item me-3">
+              <a href="/faq/" class="text-muted-custom hover-accent text-decoration-none">FAQ</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="/kontak/" class="text-muted-custom hover-accent text-decoration-none">Kontak</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div>
+          <WhatsAppButton
+            variant="gold"
+            size="sm"
+            customMessage="Halo Admin, saya ingin konsultasi kegiatan outbound di Batu Malang."
+          >
+            Chat WhatsApp
+          </WhatsAppButton>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Row: Copyright & Legal Links -->
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 pt-3 small text-muted-custom">
+      <div>
+        &copy; {currentYear} {siteConfig.name}. All rights reserved.
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <a href="/kebijakan-privasi/" class="text-muted-custom text-decoration-none hover-accent">
+          Kebijakan Privasi
+        </a>
+        <span>•</span>
+        <span>Jam Layanan: 07.30 - 21.00 WIB</span>
+      </div>
+    </div>
+  </div>
+</footer>

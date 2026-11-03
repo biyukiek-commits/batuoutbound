@@ -1,0 +1,46 @@
+---
+import type { FAQItem } from "../data/faq";
+
+export interface Props {
+  faqs: FAQItem[];
+  accordionId?: string;
+}
+
+const { faqs, accordionId = "faqAccordion" } = Astro.props;
+---
+
+<div class="accordion accordion-custom" id={accordionId}>
+  {faqs.map((faq, index) => {
+    const headingId = `heading-${faq.id}`;
+    const collapseId = `collapse-${faq.id}`;
+    const isFirst = index === 0;
+
+    return (
+      <div class="accordion-item">
+        <h3 class="accordion-header" id={headingId}>
+          <button
+            class={`accordion-button ${isFirst ? "" : "collapsed"}`}
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target={`#${collapseId}`}
+            aria-expanded={isFirst ? "true" : "false"}
+            aria-controls={collapseId}
+          >
+            {faq.question}
+          </button>
+        </h3>
+        <div
+          id={collapseId}
+          class={`accordion-collapse collapse ${isFirst ? "show" : ""}`}
+          aria-labelledby={headingId}
+          data-bs-parent={`#${accordionId}`}
+        >
+          <div class="accordion-body">
+            {faq.answer}
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
+

@@ -1,0 +1,179 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import { servicesData } from "../../data/services";
+import { siteConfig } from "../../data/site";
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  generateWebPageSchema,
+  generateBreadcrumbSchema
+} from "../../utils/schema";
+
+const pageTitle = "Layanan Outbound & Gathering Batu Malang | Pilihan Program Lengkap";
+const pageDescription = "Jelajahi kategori layanan outbound Batu Malang: Team building, company gathering, fun games, edukasi sekolah, rafting Kaliwatu, dan paintball wargame.";
+const pageUrl = `${siteConfig.url}/layanan/`;
+
+const breadcrumbItems = [
+  { name: "Layanan", url: pageUrl }
+];
+
+const schemas = [
+  generateOrganizationSchema(),
+  generateWebSiteSchema(),
+  generateWebPageSchema({
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl
+  }),
+  generateBreadcrumbSchema(breadcrumbItems)
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  schemas={schemas}
+>
+  <Breadcrumb items={breadcrumbItems} />
+
+  <!-- Page Header -->
+  <section class="py-5 position-relative overflow-hidden" style="background-color: #0c0c0c; border-bottom: 1px solid var(--color-border);">
+    <div class="container-xl">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="section-badge">Solusi Pengembangan Tim & Rekreasi</div>
+          <h1 class="display-5 fw-bold text-light mb-3">Layanan Outbound di Batu Malang</h1>
+          <p class="lead text-muted-custom mb-0">
+            Kami menyediakan beragam format kegiatan luar ruang yang disesuaikan secara presisi dengan sasaran peserta, budaya organisasi, dan alokasi anggaran Anda.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service List Section -->
+  <section class="section-padding">
+    <div class="container-xl">
+      <div class="row g-4 mb-5">
+        {servicesData.map((svc) => (
+          <div class="col-lg-6 mb-4" id={svc.slug}>
+            <div class="card-dark h-100 p-4 p-md-5 d-flex flex-column">
+              
+              <!-- Header with Icon & Target -->
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="feature-icon-box mb-0" style="width: 52px; height: 52px; min-width: 52px;">
+                  {svc.icon === "users-gear" && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                  )}
+                  {svc.icon === "briefcase" && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect>
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                  )}
+                  {svc.icon === "heart-hands" && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                    </svg>
+                  )}
+                  {svc.icon === "graduation-cap" && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path>
+                      <path d="M22 10v6"></path>
+                      <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path>
+                    </svg>
+                  )}
+                  {svc.icon === "water-waves" && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
+                      <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
+                      <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
+                    </svg>
+                  )}
+                  {svc.icon === "crosshair" && (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="22" y1="12" x2="18" y2="12"></line>
+                      <line x1="6" y1="12" x2="2" y2="12"></line>
+                      <line x1="12" y1="6" x2="12" y2="2"></line>
+                      <line x1="12" y1="22" x2="12" y2="18"></line>
+                    </svg>
+                  )}
+                </div>
+                <div>
+                  <h2 class="h4 text-light mb-1">{svc.title}</h2>
+                  <span class="small text-muted-custom">Sasaran: {svc.targetAudience}</span>
+                </div>
+              </div>
+
+              <!-- Descriptions -->
+              <p class="text-light text-opacity-90 small mb-3">{svc.shortDesc}</p>
+              <p class="text-muted-custom small mb-4">{svc.fullDesc}</p>
+
+              <!-- Key Benefits -->
+              <div class="mb-4 flex-grow-1">
+                <h3 class="h6 text-accent fw-bold text-uppercase mb-2" style="font-size: 0.8rem; letter-spacing: 0.05em;">
+                  Manfaat Utama:
+                </h3>
+                <ul class="list-unstyled small mb-0">
+                  {svc.keyBenefits.map((b) => (
+                    <li class="d-flex align-items-start gap-2 mb-2 text-light">
+                      <span class="text-accent" aria-hidden="true">✔</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="pt-4 border-top border-dark mt-auto">
+                <div class="row g-2">
+                  <div class="col-sm-6">
+                    <a href={`/layanan/${svc.slug}/`} class="btn-outline-gold w-100 justify-content-center text-center py-2 px-3 small">
+                      Detail Layanan &rarr;
+                    </a>
+                  </div>
+                  <div class="col-sm-6">
+                    <WhatsAppButton
+                      variant="gold"
+                      size="sm"
+                      serviceTitle={svc.title}
+                      className="w-100 justify-content-center text-center py-2 px-3 small"
+                    >
+                      Konsultasi Layanan
+                    </WhatsAppButton>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Quick CTA -->
+      <div class="p-4 rounded-4 text-center border border-dark" style="background-color: var(--color-surface);">
+        <h3 class="h4 text-light mb-2">Ingin Program Khusus yang Dikombinasikan?</h3>
+        <p class="text-muted-custom small mb-3">
+          Seluruh layanan kami dapat dipadukan dalam format paket kombo (misal: Outbound Team Building + Rafting Kaliwatu + Gala Dinner Villa).
+        </p>
+        <WhatsAppButton
+          variant="gold"
+          size="md"
+          customMessage="Halo Admin, saya ingin rancangan layanan kustom untuk kegiatan di Batu Malang."
+        >
+          Konsultasi Rancangan Program Kustom
+        </WhatsAppButton>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+

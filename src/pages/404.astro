@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { siteConfig } from "../data/site";
+
+const pageTitle = "Halaman Tidak Ditemukan (404) | Batu Outbound";
+const pageDescription = "Maaf, halaman yang Anda tuju tidak ditemukan atau telah dipindahkan.";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  noindex={true}
+>
+  <section class="section-padding text-center d-flex align-items-center" style="min-height: 70vh;">
+    <div class="container-xl">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="display-1 fw-bold text-accent mb-2">404</div>
+          <h1 class="h2 text-light mb-3">Halaman Tidak Ditemukan</h1>
+          <p class="text-muted-custom mb-4">
+            Alamat URL yang Anda tuju mungkin salah ketik, telah dihapus, atau sedang dalam pembaruan rute. Silakan kembali ke beranda atau hubungi tim kami untuk panduan paket.
+          </p>
+
+          <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="/" class="btn-gold py-2 px-4 fs-6">
+              Kembali ke Beranda
+            </a>
+            <WhatsAppButton
+              variant="outline"
+              size="md"
+              customMessage="Halo Admin, saya mengalami kendala tautan halaman di website Batu Outbound."
+            >
+              Bantuan via WhatsApp
+            </WhatsAppButton>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

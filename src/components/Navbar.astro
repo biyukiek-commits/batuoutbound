@@ -1,0 +1,137 @@
+---
+import { siteConfig } from "../data/site";
+import WhatsAppButton from "./WhatsAppButton.astro";
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href === "/" && currentPath === "/") return true;
+  if (href !== "/" && currentPath.startsWith(href)) return true;
+  return false;
+}
+---
+
+<header class="sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-custom py-0" aria-label="Navigasi Utama">
+    <div class="container-xl d-flex align-items-center justify-content-between h-100">
+      
+      <!-- Brand Logo -->
+      <a class="navbar-brand" href="/" aria-label={`${siteConfig.name} - Beranda`}>
+        <span class="d-inline-flex align-items-center justify-content-center text-accent me-2">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m8 3 4 8 5-5 5 15H2L8 3z"></path>
+          </svg>
+        </span>
+        <span class="fw-bold tracking-tight">BATU<span class="brand-accent">OUTBOUND</span></span>
+      </a>
+
+      <!-- Mobile Hamburger Button -->
+      <button
+        class="navbar-toggler border-0 p-2 text-light"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#mobileMenu"
+        aria-controls="mobileMenu"
+        aria-expanded="false"
+        aria-label="Buka menu navigasi"
+      >
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Desktop Nav Menu -->
+      <div class="collapse navbar-collapse justify-content-end d-none d-lg-flex" id="navbarNav">
+        <ul class="navbar-nav align-items-center gap-1 me-4">
+          {siteConfig.navLinks.map((link) => (
+            <li class="nav-item">
+              <a
+                class={`nav-link ${isActive(link.href) ? "active text-accent" : ""}`}
+                href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
+              >
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <!-- Navbar CTA Button -->
+        <div class="d-flex align-items-center">
+          <WhatsAppButton
+            variant="gold"
+            size="sm"
+            customMessage="Halo, saya ingin konsultasi kegiatan outbound di Batu Malang."
+            ariaLabel="Hubungi customer service via WhatsApp"
+          >
+            Konsultasi WhatsApp
+          </WhatsAppButton>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- Mobile Offcanvas Menu (PRD Section 4.1) -->
+  <div
+    class="offcanvas offcanvas-end offcanvas-dark"
+    tabindex="-1"
+    id="mobileMenu"
+    aria-labelledby="mobileMenuLabel"
+  >
+    <div class="offcanvas-header border-bottom border-dark px-4 py-3">
+      <h5 class="offcanvas-title d-flex align-items-center gap-2" id="mobileMenuLabel">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent" aria-hidden="true">
+          <path d="m8 3 4 8 5-5 5 15H2L8 3z"></path>
+        </svg>
+        <span class="fw-bold">BATU<span class="text-accent">OUTBOUND</span></span>
+      </h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Tutup navigasi"
+      ></button>
+    </div>
+
+    <div class="offcanvas-body d-flex flex-column justify-content-between px-4 py-4">
+      <nav aria-label="Navigasi Menu Mobile">
+        <ul class="navbar-nav gap-2">
+          {siteConfig.navLinks.map((link) => (
+            <li class="nav-item">
+              <a
+                class={`nav-link fs-5 py-2 px-3 rounded ${isActive(link.href) ? "active text-accent bg-dark" : "text-light"}`}
+                href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
+              >
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="pt-4 border-top border-dark mt-4">
+        <p class="small text-muted-custom mb-3">
+          Konsultasi rencana outbound, gathering perusahaan, atau wisata petualangan di Kota Batu:
+        </p>
+        <WhatsAppButton
+          variant="gold"
+          size="md"
+          className="w-100 justify-content-center"
+          customMessage="Halo, saya ingin konsultasi rencana outbound di Batu Malang."
+        >
+          Chat WhatsApp Sekarang
+        </WhatsAppButton>
+        <div class="mt-3 text-center">
+          <a href={`tel:${siteConfig.phoneFormatted.replace(/\s+/g, '')}`} class="small text-muted-custom text-decoration-none">
+            📞 {siteConfig.phoneFormatted}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+

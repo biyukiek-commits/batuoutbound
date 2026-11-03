@@ -1,0 +1,237 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
+import { servicesData, type OutboundService } from "../../data/services";
+import { siteConfig } from "../../data/site";
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  generateWebPageSchema,
+  generateBreadcrumbSchema,
+  generateServiceSchema,
+  generateFAQSchema
+} from "../../utils/schema";
+
+export function getStaticPaths() {
+  return servicesData.map((service) => ({
+    params: { slug: service.slug },
+    props: { service }
+  }));
+}
+
+interface Props {
+  service: OutboundService;
+}
+
+const { service } = Astro.props;
+
+const pageTitle = `${service.title} di Batu Malang | Layanan Outbound`;
+const pageDescription = `${service.shortDesc} Pelajari format kegiatan, manfaat, pilihan penyesuaian, dan konsultasikan proposal via WhatsApp.`;
+const pageUrl = `${siteConfig.url}/layanan/${service.slug}/`;
+
+const breadcrumbItems = [
+  { name: "Layanan", url: `${siteConfig.url}/layanan/` },
+  { name: service.title, url: pageUrl }
+];
+
+const schemas = [
+  generateOrganizationSchema(),
+  generateWebSiteSchema(),
+  generateWebPageSchema({
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl
+  }),
+  generateBreadcrumbSchema(breadcrumbItems),
+  generateServiceSchema({
+    name: service.title,
+    serviceType: "Layanan Outbound & Gathering",
+    description: service.shortDesc,
+    url: pageUrl
+  }),
+  generateFAQSchema(service.serviceFaqs)
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  image={service.image}
+  schemas={schemas}
+>
+  <Breadcrumb items={breadcrumbItems} />
+
+  <!-- Service Detail Header -->
+  <section class="py-5 position-relative overflow-hidden" style="background-color: #0c0c0c; border-bottom: 1px solid var(--color-border);">
+    <div class="container-xl">
+      <div class="row align-items-center gy-4">
+        <div class="col-lg-8">
+          <div class="section-badge mb-3">Layanan Unggulan</div>
+          <h1 class="display-5 fw-bold text-light mb-3">{service.title}</h1>
+          <p class="lead text-muted-custom mb-4">{service.fullDesc}</p>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge bg-dark border border-secondary px-3 py-2 small">
+              🎯 Sasaran: {service.targetAudience}
+            </span>
+            <span class="badge bg-dark border border-secondary px-3 py-2 small">
+              📍 Area: Kota Batu & Malang Raya
+            </span>
+          </div>
+        </div>
+
+        <div class="col-lg-4 text-lg-end">
+          <div class="card-dark p-4 border border-dark text-start">
+            <h3 class="h5 text-light mb-2">Konsultasi Layanan</h3>
+            <p class="small text-muted-custom mb-3">
+              Dapatkan proposal rancangan dan jadwal kegiatan yang disesuaikan dengan kebutuhan Anda:
+            </p>
+            <WhatsAppButton
+              variant="gold"
+              size="md"
+              serviceTitle={service.title}
+              className="w-100 justify-content-center text-center"
+              ariaLabel={`Konsultasi via WhatsApp untuk layanan ${service.title}`}
+            >
+              Konsultasi WhatsApp Sekarang
+            </WhatsAppButton>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Main Content -->
+  <section class="section-padding">
+    <div class="container-xl">
+      <div class="row g-5">
+        
+        <!-- Left Column -->
+        <div class="col-lg-8">
+          
+          <!-- Image -->
+          <div class="rounded-4 overflow-hidden mb-5 border border-dark">
+            <img
+              src={service.image}
+              alt={service.altText}
+              class="w-100 object-fit-cover"
+              style="max-height: 440px;"
+              width="800"
+              height="440"
+            />
+          </div>
+
+          <!-- Key Benefits -->
+          <div class="mb-5">
+            <h2 class="h2 text-light mb-3">Tujuan & Nilai Manfaat Utama</h2>
+            <p class="text-muted-custom">
+              Program {service.title} dirancang untuk memberikan dampak positif nyata pada soliditas dan mentalitas peserta:
+            </p>
+            <div class="row g-3">
+              {service.keyBenefits.map((benefit, index) => (
+                <div class="col-md-12">
+                  <div class="p-3 rounded-3 border border-dark d-flex align-items-start gap-3" style="background-color: var(--color-surface);">
+                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle text-dark fw-bold" style="width: 32px; height: 32px; min-width: 32px; background-color: var(--color-accent); font-size: 0.9rem;">
+                      {index + 1}
+                    </div>
+                    <div class="text-light small pt-1">
+                      {benefit}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Typical Activities -->
+          <div class="mb-5">
+            <h2 class="h2 text-light mb-3">Simulasi & Karakteristik Kegiatan</h2>
+            <div class="p-4 rounded-3 border border-dark" style="background-color: var(--color-surface-2);">
+              <ul class="list-unstyled mb-0 small">
+                {service.typicalActivities.map((act) => (
+                  <li class="d-flex align-items-start gap-2 mb-3 text-light">
+                    <span class="text-accent fs-5" aria-hidden="true">✔</span>
+                    <span><strong>{act}</strong></span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <!-- Customization Options -->
+          <div class="mb-5">
+            <h2 class="h2 text-light mb-3">Pilihan Penyesuaian (Customization)</h2>
+            <p class="text-muted-custom small mb-3">
+              Kami menyadari setiap organisasi memiliki target berbeda. Format layanan ini dapat dikustomisasi:
+            </p>
+            <div class="p-4 rounded-3 border border-dark" style="background-color: var(--color-surface);">
+              <ul class="list-unstyled mb-0 small">
+                {service.customizationOptions.map((opt) => (
+                  <li class="d-flex align-items-start gap-2 mb-2 text-light">
+                    <span class="text-accent" aria-hidden="true">👉</span>
+                    <span>{opt}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <!-- FAQs -->
+          <div class="mb-4">
+            <h2 class="h2 text-light mb-3">Pertanyaan Seputar Layanan Ini</h2>
+            <FAQAccordion faqs={service.serviceFaqs.map((f, i) => ({ id: `svc-${i}`, question: f.question, answer: f.answer }))} />
+          </div>
+
+        </div>
+
+        <!-- Right Column Sidebar -->
+        <div class="col-lg-4">
+          <div class="position-sticky" style="top: calc(var(--header-height) + 24px);">
+            
+            <div class="card-dark p-4 border border-dark mb-4">
+              <h3 class="h5 text-light mb-3">Mulai Rencanakan Acara</h3>
+              <p class="small text-muted-custom mb-3">
+                Konsultasikan kebutuhan spesifik instansi Anda untuk mendapatkan proposal penawaran resmi dan rundown acara detail:
+              </p>
+              <WhatsAppButton
+                variant="gold"
+                size="md"
+                serviceTitle={service.title}
+                className="w-100 justify-content-center text-center"
+              >
+                Chat WhatsApp (081217366600)
+              </WhatsAppButton>
+            </div>
+
+            <!-- Venues -->
+            <div class="card-dark p-4 border border-dark mb-4">
+              <h3 class="h6 text-accent fw-bold text-uppercase mb-3">Rekomendasi Lokasi Favorit</h3>
+              <ul class="list-unstyled small mb-0">
+                {service.recommendedVenues.map((v) => (
+                  <li class="d-flex align-items-start gap-2 mb-2 text-light">
+                    <span>📍</span>
+                    <span>{v}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="card-dark p-4 border border-dark">
+              <h3 class="h6 text-light mb-2">Lihat Paket yang Relevan</h3>
+              <p class="small text-muted-custom mb-3">
+                Ketahui estimasi biaya dan rundown siap pakai untuk layanan ini:
+              </p>
+              <a href="/paket/" class="btn-outline-gold w-100 justify-content-center text-center py-2 px-3 small">
+                Buka Daftar Paket &rarr;
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
