@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
+import Icon from "../../components/Icon.astro";
 import { articlesData, type ArticleItem } from "../../data/articles";
 import { siteConfig } from "../../data/site";
 import {
@@ -80,8 +81,9 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
             <span class="badge bg-black text-accent border border-secondary px-3 py-2 small">
               {article.category}
             </span>
-            <span class="text-muted-custom small">
-              ⏱ {article.readTime}
+            <span class="text-muted-custom small d-inline-flex align-items-center gap-1">
+              <Icon name="clock" size={13} class="text-accent" />
+              <span>{article.readTime}</span>
             </span>
           </div>
 
@@ -90,7 +92,10 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
           </h1>
 
           <div class="d-flex align-items-center gap-3 small text-muted-custom pb-4 mb-4 border-bottom border-dark">
-            <span>✍ Ditulis oleh: <strong>{article.author}</strong></span>
+            <span class="d-inline-flex align-items-center gap-1">
+              <Icon name="document" size={13} class="text-accent" />
+              <span>Ditulis oleh: <strong>{article.author}</strong></span>
+            </span>
             <span>&bull;</span>
             <time datetime={article.publishDate}>Dipublikasikan: {article.publishDateFormatted}</time>
           </div>
@@ -117,7 +122,7 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
           <div class="toc-wrapper mb-5 rounded-3 border border-dark overflow-hidden" style="background-color: var(--color-surface);">
             <div class="p-3 px-4 d-flex align-items-center justify-content-between border-bottom border-dark cursor-pointer" id="tocHeader" role="button" aria-expanded="true" aria-controls="tocBody">
               <div class="d-flex align-items-center gap-2">
-                <span class="text-accent fs-6">📑</span>
+                <Icon name="document" size={16} class="text-accent" />
                 <span class="h6 mb-0 text-accent fw-bold text-uppercase" style="font-size: 0.85rem; letter-spacing: 0.05em;">
                   Daftar Isi Artikel
                 </span>
@@ -193,7 +198,7 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
           <!-- FAQ di Bawah Kesimpulan (Permintaan #4) -->
           <div id="faq-artikel" class="mb-5 pt-3">
             <div class="d-flex align-items-center gap-2 mb-3">
-              <span class="text-accent fs-5">❓</span>
+              <Icon name="info" size={20} class="text-accent" />
               <h2 class="h4 text-light mb-0">Pertanyaan yang Sering Diajukan (FAQ)</h2>
             </div>
             <p class="small text-muted-custom mb-3">
@@ -272,10 +277,11 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
                   href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${article.title} - ${pageUrl}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="btn btn-sm btn-outline-success d-inline-flex align-items-center gap-1 px-3 py-1 text-decoration-none rounded-pill"
+                  class="btn btn-sm btn-outline-success d-inline-flex align-items-center gap-2 px-3 py-1 text-decoration-none rounded-pill"
                   title="Bagikan ke WhatsApp"
                 >
-                  <span>💬 WhatsApp</span>
+                  <Icon name="whatsapp" size={14} />
+                  <span>WhatsApp</span>
                 </a>
 
                 <!-- Facebook Share -->
@@ -283,10 +289,11 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
                   href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1 px-3 py-1 text-decoration-none rounded-pill"
+                  class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-2 px-3 py-1 text-decoration-none rounded-pill"
                   title="Bagikan ke Facebook"
                 >
-                  <span>📘 Facebook</span>
+                  <Icon name="facebook" size={14} />
+                  <span>Facebook</span>
                 </a>
 
                 <!-- Twitter / X Share -->
@@ -294,20 +301,22 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(pageUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="btn btn-sm btn-outline-light d-inline-flex align-items-center gap-1 px-3 py-1 text-decoration-none rounded-pill"
+                  class="btn btn-sm btn-outline-light d-inline-flex align-items-center gap-2 px-3 py-1 text-decoration-none rounded-pill"
                   title="Bagikan ke X / Twitter"
                 >
-                  <span>✖ Twitter/X</span>
+                  <Icon name="twitter" size={14} />
+                  <span>Twitter/X</span>
                 </a>
 
                 <!-- Copy Link Button -->
                 <button
                   type="button"
                   id="copyLinkBtn"
-                  class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-1 px-3 py-1 text-light rounded-pill"
+                  class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-2 px-3 py-1 text-light rounded-pill"
                   title="Salin Tautan Artikel"
                 >
-                  <span id="copyLinkText">🔗 Salin Link</span>
+                  <Icon name="copy" size={14} />
+                  <span id="copyLinkText">Salin Link</span>
                 </button>
               </div>
             </div>
@@ -369,9 +378,9 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
     if (copyBtn && copyText) {
       copyBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(window.location.href).then(() => {
-          copyText.textContent = '✔ Tersalin!';
+          copyText.textContent = 'Tersalin!';
           setTimeout(() => {
-            copyText.textContent = '🔗 Salin Link';
+            copyText.textContent = 'Salin Link';
           }, 2500);
         });
       });

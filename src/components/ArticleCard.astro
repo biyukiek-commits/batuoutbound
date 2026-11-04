@@ -37,7 +37,7 @@ const { article } = Astro.props;
 
     <!-- Title & Excerpt -->
     <h3 class="h5 mb-2">
-      <a href={`/blog/#${article.slug}`} class="text-light text-decoration-none article-title-link">
+      <a href={`/blog/${article.slug}/`} class="text-light text-decoration-none article-title-link">
         {article.title}
       </a>
     </h3>
@@ -47,7 +47,7 @@ const { article } = Astro.props;
 
     <!-- Read more footer -->
     <div class="pt-3 border-top border-dark mt-auto">
-      <a href={`/blog/#${article.slug}`} class="small fw-semibold text-accent d-inline-flex align-items-center gap-1 text-decoration-none">
+      <a href={`/blog/${article.slug}/`} class="small fw-semibold text-accent d-inline-flex align-items-center gap-1 text-decoration-none">
         <span>Baca Selengkapnya</span>
         <span>&rarr;</span>
       </a>

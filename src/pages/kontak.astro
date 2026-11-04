@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
+import Icon from "../components/Icon.astro";
 import { siteConfig } from "../data/site";
 import {
   generateOrganizationSchema,
@@ -63,8 +64,8 @@ const schemas = [
             <h2 class="h3 text-light mb-4">Saluran Kontak Resmi</h2>
             
             <div class="d-flex align-items-start gap-3 mb-4">
-              <div class="feature-icon-box mb-0" style="width: 44px; height: 44px; min-width: 44px;">
-                💬
+              <div class="feature-icon-box mb-0 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; min-width: 44px;">
+                <Icon name="whatsapp" size={20} class="text-accent" />
               </div>
               <div>
                 <h3 class="h6 text-accent mb-1">WhatsApp & Telepon:</h3>
@@ -76,8 +77,8 @@ const schemas = [
             </div>
 
             <div class="d-flex align-items-start gap-3 mb-4">
-              <div class="feature-icon-box mb-0" style="width: 44px; height: 44px; min-width: 44px;">
-                ✉️
+              <div class="feature-icon-box mb-0 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; min-width: 44px;">
+                <Icon name="mail" size={20} class="text-accent" />
               </div>
               <div>
                 <h3 class="h6 text-accent mb-1">Email Resmi:</h3>
@@ -89,8 +90,8 @@ const schemas = [
             </div>
 
             <div class="d-flex align-items-start gap-3 mb-4">
-              <div class="feature-icon-box mb-0" style="width: 44px; height: 44px; min-width: 44px;">
-                ⏱
+              <div class="feature-icon-box mb-0 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; min-width: 44px;">
+                <Icon name="clock" size={20} class="text-accent" />
               </div>
               <div>
                 <h3 class="h6 text-accent mb-1">Jam Operasional:</h3>
@@ -99,8 +100,8 @@ const schemas = [
             </div>
 
             <div class="d-flex align-items-start gap-3">
-              <div class="feature-icon-box mb-0" style="width: 44px; height: 44px; min-width: 44px;">
-                📍
+              <div class="feature-icon-box mb-0 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; min-width: 44px;">
+                <Icon name="pin" size={20} class="text-accent" />
               </div>
               <div>
                 <h3 class="h6 text-accent mb-1">Area Operasional:</h3>
@@ -197,7 +198,10 @@ const schemas = [
                 type="submit"
                 class="btn-gold w-100 py-3 fs-6 justify-content-center"
               >
-                <span>💬 Kirim Rincian Acara via WhatsApp</span>
+                <span class="d-inline-flex align-items-center gap-2">
+                  <Icon name="whatsapp" size={18} />
+                  <span>Kirim Rincian Acara via WhatsApp</span>
+                </span>
               </button>
             </form>
 

@@ -6,6 +6,7 @@ import ServiceCard from "../components/ServiceCard.astro";
 import GalleryGrid from "../components/GalleryGrid.astro";
 import FAQAccordion from "../components/FAQAccordion.astro";
 import ArticleCard from "../components/ArticleCard.astro";
+import Icon from "../components/Icon.astro";
 
 import { packagesData } from "../data/packages";
 import { servicesData } from "../data/services";
@@ -120,13 +121,13 @@ const testimonials = [
           <!-- Quick Trust Points -->
           <div class="d-flex flex-wrap align-items-center gap-4 text-muted-custom small pt-2">
             <span class="d-inline-flex align-items-center gap-2">
-              <span class="text-accent fw-bold">✓</span> Tanpa Biaya Konsultasi
+              <Icon name="check" size={14} class="text-accent" /> Tanpa Biaya Konsultasi
             </span>
             <span class="d-inline-flex align-items-center gap-2">
-              <span class="text-accent fw-bold">✓</span> Proposal Kustom 1x24 Jam
+              <Icon name="check" size={14} class="text-accent" /> Proposal Kustom 1x24 Jam
             </span>
             <span class="d-inline-flex align-items-center gap-2">
-              <span class="text-accent fw-bold">✓</span> Standar Safety & Fasilitator SNI
+              <Icon name="check" size={14} class="text-accent" /> Standar Safety & Fasilitator SNI
             </span>
           </div>
         </div>
@@ -440,7 +441,9 @@ const testimonials = [
             <div class="card-dark h-100 p-4 d-flex flex-column justify-content-between">
               <div>
                 <div class="d-flex align-items-center gap-1 text-warning mb-3" aria-label="Rating 5 dari 5 bintang">
-                  {"★".repeat(item.rating)}
+                  {Array.from({ length: item.rating }).map(() => (
+                    <Icon name="star" size={15} class="text-warning" />
+                  ))}
                 </div>
                 <p class="text-light text-opacity-90 small fst-italic mb-4" style="line-height: 1.7;">
                   "{item.text}"
@@ -547,8 +550,16 @@ const testimonials = [
           </a>
         </div>
 
-        <div class="small text-muted-custom">
-          ⏱ Respon Cepat Setiap Hari (07.30 - 21.00 WIB) &bull; 📍 Melayani Seluruh Area Kota Batu & Malang Raya
+        <div class="small text-muted-custom d-flex flex-wrap align-items-center justify-content-center gap-3">
+          <span class="d-inline-flex align-items-center gap-1">
+            <Icon name="clock" size={14} class="text-accent" />
+            <span>Respon Cepat Setiap Hari (07.30 - 21.00 WIB)</span>
+          </span>
+          <span class="d-none d-sm-inline text-secondary">&bull;</span>
+          <span class="d-inline-flex align-items-center gap-1">
+            <Icon name="pin" size={14} class="text-accent" />
+            <span>Melayani Seluruh Area Kota Batu & Malang Raya</span>
+          </span>
         </div>
 
       </div>

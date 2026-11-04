@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import Icon from "../../components/Icon.astro";
 import { packagesData } from "../../data/packages";
 import { siteConfig } from "../../data/site";
 import {
@@ -81,11 +82,13 @@ const schemas = [
 
               <!-- Quick Info Badges -->
               <div class="d-flex flex-wrap gap-2 mb-4 pb-3 border-bottom border-dark">
-                <span class="badge bg-black text-light border border-secondary px-3 py-2 small">
-                  ⏱ Durasi: {pkg.duration}
+                <span class="badge bg-black text-light border border-secondary px-3 py-2 small d-inline-flex align-items-center gap-1">
+                  <Icon name="clock" size={13} class="text-accent" />
+                  <span>Durasi: {pkg.duration}</span>
                 </span>
-                <span class="badge bg-black text-light border border-secondary px-3 py-2 small">
-                  👥 {pkg.minParticipants}
+                <span class="badge bg-black text-light border border-secondary px-3 py-2 small d-inline-flex align-items-center gap-1">
+                  <Icon name="users" size={13} class="text-accent" />
+                  <span>{pkg.minParticipants}</span>
                 </span>
               </div>
 
@@ -97,7 +100,9 @@ const schemas = [
                 <ul class="list-unstyled small mb-0">
                   {pkg.activities.map((act) => (
                     <li class="d-flex align-items-start gap-2 mb-2 text-light">
-                      <span class="text-accent" aria-hidden="true">✔</span>
+                      <span class="text-accent mt-1 flex-shrink-0" aria-hidden="true">
+                        <Icon name="check" size={13} />
+                      </span>
                       <span>{act}</span>
                     </li>
                   ))}

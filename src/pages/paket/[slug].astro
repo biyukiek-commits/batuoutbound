@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
+import Icon from "../../components/Icon.astro";
 import { packagesData, type OutboundPackage } from "../../data/packages";
 import { siteConfig } from "../../data/site";
 import {
@@ -80,15 +81,18 @@ const schemas = [
           <h1 class="display-5 fw-bold text-light mb-3">{pkg.title}</h1>
           <p class="lead text-muted-custom mb-4">{pkg.summary}</p>
 
-          <div class="d-flex flex-wrap gap-3 text-light small pb-2">
-            <span class="badge bg-dark border border-secondary px-3 py-2">
-              ⏱ Durasi: {pkg.duration}
+          <div class="d-flex flex-wrap gap-2 text-light small pb-2">
+            <span class="badge bg-dark border border-secondary px-3 py-2 d-inline-flex align-items-center gap-1">
+              <Icon name="clock" size={13} class="text-accent" />
+              <span>Durasi: {pkg.duration}</span>
             </span>
-            <span class="badge bg-dark border border-secondary px-3 py-2">
-              👥 Kapasitas: {pkg.minParticipants}
+            <span class="badge bg-dark border border-secondary px-3 py-2 d-inline-flex align-items-center gap-1">
+              <Icon name="users" size={13} class="text-accent" />
+              <span>Kapasitas: {pkg.minParticipants}</span>
             </span>
-            <span class="badge bg-dark border border-secondary px-3 py-2">
-              🎯 Sasaran: {pkg.targetAudience}
+            <span class="badge bg-dark border border-secondary px-3 py-2 d-inline-flex align-items-center gap-1">
+              <Icon name="target" size={13} class="text-accent" />
+              <span>Sasaran: {pkg.targetAudience}</span>
             </span>
           </div>
         </div>
@@ -142,7 +146,9 @@ const schemas = [
               <ul class="list-unstyled mb-0">
                 {pkg.activities.map((act) => (
                   <li class="d-flex align-items-start gap-3 mb-3 text-light">
-                    <span class="text-accent fs-5" aria-hidden="true">✔</span>
+                    <span class="text-accent mt-1 flex-shrink-0" aria-hidden="true">
+                      <Icon name="check" size={14} />
+                    </span>
                     <div>
                       <strong>{act}</strong>
                     </div>
@@ -187,7 +193,8 @@ const schemas = [
               <div class="col-md-6">
                 <div class="card-dark p-4 border border-dark h-100">
                   <h3 class="h5 text-success mb-3 d-flex align-items-center gap-2">
-                    <span>✔</span> Fasilitas Termasuk (Included)
+                    <Icon name="check" size={16} class="text-success" />
+                    <span>Fasilitas Termasuk (Included)</span>
                   </h3>
                   <ul class="list-unstyled small mb-0">
                     {pkg.facilitiesIncluded.map((fac) => (
@@ -203,7 +210,8 @@ const schemas = [
               <div class="col-md-6">
                 <div class="card-dark p-4 border border-dark h-100">
                   <h3 class="h5 text-muted-custom mb-3 d-flex align-items-center gap-2">
-                    <span>✘</span> Fasilitas Tidak Termasuk (Excluded)
+                    <Icon name="cross" size={16} class="text-muted-custom" />
+                    <span>Fasilitas Tidak Termasuk (Excluded)</span>
                   </h3>
                   <ul class="list-unstyled small mb-0">
                     {pkg.facilitiesExcluded.map((fac) => (
@@ -225,7 +233,9 @@ const schemas = [
               <ul class="list-unstyled small mb-0">
                 {pkg.participantRequirements.map((req) => (
                   <li class="d-flex align-items-start gap-2 mb-2 text-light">
-                    <span class="text-accent" aria-hidden="true">👉</span>
+                    <span class="text-accent mt-1 flex-shrink-0" aria-hidden="true">
+                      <Icon name="arrow-right" size={13} />
+                    </span>
                     <span>{req}</span>
                   </li>
                 ))}
@@ -278,7 +288,9 @@ const schemas = [
               <ul class="list-unstyled small mb-0">
                 {pkg.recommendedLocations.map((loc) => (
                   <li class="d-flex align-items-start gap-2 mb-2 text-light">
-                    <span>📍</span>
+                    <span class="text-accent mt-1 flex-shrink-0">
+                      <Icon name="pin" size={13} />
+                    </span>
                     <span>{loc}</span>
                   </li>
                 ))}

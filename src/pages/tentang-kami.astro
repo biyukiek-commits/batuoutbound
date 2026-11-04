@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
+import Icon from "../components/Icon.astro";
 import { siteConfig } from "../data/site";
 import {
   generateOrganizationSchema,
@@ -243,28 +244,28 @@ const schemas = [
           
           <ul class="list-unstyled text-light small mb-4" style="line-height: 2;">
             <li class="d-flex align-items-center gap-2">
-              <span class="text-accent fw-bold">📍</span>
-              <strong>Kawasan Hutan Pinus Coban Rondo</strong> (Outbound Ground & Paintball Arena)
+              <Icon name="pin" size={14} class="text-accent flex-shrink-0" />
+              <span><strong>Kawasan Hutan Pinus Coban Rondo</strong> (Outbound Ground & Paintball Arena)</span>
             </li>
             <li class="d-flex align-items-center gap-2">
-              <span class="text-accent fw-bold">📍</span>
-              <strong>Songgoriti Park & Outbound Camp Ground</strong>
+              <Icon name="pin" size={14} class="text-accent flex-shrink-0" />
+              <span><strong>Songgoriti Park & Outbound Camp Ground</strong></span>
             </li>
             <li class="d-flex align-items-center gap-2">
-              <span class="text-accent fw-bold">📍</span>
-              <strong>Kusuma Agrowisata Outdoor Ground Batu</strong>
+              <Icon name="pin" size={14} class="text-accent flex-shrink-0" />
+              <span><strong>Kusuma Agrowisata Outdoor Ground Batu</strong></span>
             </li>
             <li class="d-flex align-items-center gap-2">
-              <span class="text-accent fw-bold">📍</span>
-              <strong>Basecamp Rafting Sungai Kaliwatu & Sahabat Air Batu</strong>
+              <Icon name="pin" size={14} class="text-accent flex-shrink-0" />
+              <span><strong>Basecamp Rafting Sungai Kaliwatu & Sahabat Air Batu</strong></span>
             </li>
             <li class="d-flex align-items-center gap-2">
-              <span class="text-accent fw-bold">📍</span>
-              <strong>Taman Rekreasi Selecta Green Lawn Area</strong>
+              <Icon name="pin" size={14} class="text-accent flex-shrink-0" />
+              <span><strong>Taman Rekreasi Selecta Green Lawn Area</strong></span>
             </li>
             <li class="d-flex align-items-center gap-2">
-              <span class="text-accent fw-bold">📍</span>
-              <strong>Bumi Perkemahan Coban Talun & Pujon Malang Raya</strong>
+              <Icon name="pin" size={14} class="text-accent flex-shrink-0" />
+              <span><strong>Bumi Perkemahan Coban Talun & Pujon Malang Raya</strong></span>
             </li>
           </ul>
 

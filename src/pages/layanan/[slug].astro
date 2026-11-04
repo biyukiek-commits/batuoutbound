@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
 import FAQAccordion from "../../components/FAQAccordion.astro";
+import Icon from "../../components/Icon.astro";
 import { servicesData, type OutboundService } from "../../data/services";
 import { siteConfig } from "../../data/site";
 import {
@@ -72,11 +73,13 @@ const schemas = [
           <h1 class="display-5 fw-bold text-light mb-3">{service.title}</h1>
           <p class="lead text-muted-custom mb-4">{service.fullDesc}</p>
           <div class="d-flex flex-wrap gap-2">
-            <span class="badge bg-dark border border-secondary px-3 py-2 small">
-              🎯 Sasaran: {service.targetAudience}
+            <span class="badge bg-dark border border-secondary px-3 py-2 small d-inline-flex align-items-center gap-1">
+              <Icon name="target" size={13} class="text-accent" />
+              <span>Sasaran: {service.targetAudience}</span>
             </span>
-            <span class="badge bg-dark border border-secondary px-3 py-2 small">
-              📍 Area: Kota Batu & Malang Raya
+            <span class="badge bg-dark border border-secondary px-3 py-2 small d-inline-flex align-items-center gap-1">
+              <Icon name="pin" size={13} class="text-accent" />
+              <span>Area: Kota Batu & Malang Raya</span>
             </span>
           </div>
         </div>
@@ -151,7 +154,9 @@ const schemas = [
               <ul class="list-unstyled mb-0 small">
                 {service.typicalActivities.map((act) => (
                   <li class="d-flex align-items-start gap-2 mb-3 text-light">
-                    <span class="text-accent fs-5" aria-hidden="true">✔</span>
+                    <span class="text-accent mt-1 flex-shrink-0" aria-hidden="true">
+                      <Icon name="check" size={14} />
+                    </span>
                     <span><strong>{act}</strong></span>
                   </li>
                 ))}
@@ -169,7 +174,9 @@ const schemas = [
               <ul class="list-unstyled mb-0 small">
                 {service.customizationOptions.map((opt) => (
                   <li class="d-flex align-items-start gap-2 mb-2 text-light">
-                    <span class="text-accent" aria-hidden="true">👉</span>
+                    <span class="text-accent mt-1 flex-shrink-0" aria-hidden="true">
+                      <Icon name="arrow-right" size={13} />
+                    </span>
                     <span>{opt}</span>
                   </li>
                 ))}
@@ -210,7 +217,9 @@ const schemas = [
               <ul class="list-unstyled small mb-0">
                 {service.recommendedVenues.map((v) => (
                   <li class="d-flex align-items-start gap-2 mb-2 text-light">
-                    <span>📍</span>
+                    <span class="text-accent mt-1 flex-shrink-0">
+                      <Icon name="pin" size={13} />
+                    </span>
                     <span>{v}</span>
                   </li>
                 ))}

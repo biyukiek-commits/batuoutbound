@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from "../data/site";
 import WhatsAppButton from "./WhatsAppButton.astro";
+import Icon from "./Icon.astro";
 
 const currentYear = new Date().getFullYear();
 ---
@@ -22,8 +23,9 @@ const currentYear = new Date().getFullYear();
           Layanan outbound, team building, dan family gathering profesional di kawasan sejuk Kota Batu & Malang Raya.
         </p>
         <div class="d-flex flex-wrap align-items-center gap-2 small">
-          <a href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer" class="text-accent fw-bold text-decoration-none">
-            💬 {siteConfig.phoneFormatted}
+          <a href={`https://wa.me/${siteConfig.whatsappNumber}`} target="_blank" rel="noopener noreferrer" class="text-accent fw-bold text-decoration-none d-inline-flex align-items-center">
+            <Icon name="whatsapp" size={14} class="me-1 text-accent" />
+            {siteConfig.phoneFormatted}
           </a>
           <span class="text-secondary">•</span>
           <span class="text-muted-custom">Batu & Malang, Jawa Timur</span>

@@ -1,6 +1,7 @@
 ---
 import type { OutboundService } from "../data/services";
 import WhatsAppButton from "./WhatsAppButton.astro";
+import Icon from "./Icon.astro";
 
 export interface Props {
   service: OutboundService;
@@ -67,7 +68,9 @@ const { service } = Astro.props;
       <ul class="list-unstyled small mb-0">
         {service.keyBenefits.map((benefit) => (
           <li class="d-flex align-items-start gap-2 mb-2 text-light">
-            <span class="text-accent" aria-hidden="true">✔</span>
+            <span class="text-accent mt-1 flex-shrink-0" aria-hidden="true">
+              <Icon name="check" size={13} />
+            </span>
             <span>{benefit}</span>
           </li>
         ))}

@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from "../data/site";
 import WhatsAppButton from "./WhatsAppButton.astro";
+import Icon from "./Icon.astro";
 
 const currentPath = Astro.url.pathname;
 
@@ -126,8 +127,9 @@ function isActive(href: string): boolean {
           Chat WhatsApp Sekarang
         </WhatsAppButton>
         <div class="mt-3 text-center">
-          <a href={`tel:${siteConfig.phoneFormatted.replace(/\s+/g, '')}`} class="small text-muted-custom text-decoration-none">
-            📞 {siteConfig.phoneFormatted}
+          <a href={`tel:${siteConfig.phoneFormatted.replace(/\s+/g, '')}`} class="small text-muted-custom text-decoration-none d-inline-flex align-items-center">
+            <Icon name="phone" size={13} class="me-1 text-accent" />
+            <span>{siteConfig.phoneFormatted}</span>
           </a>
         </div>
       </div>

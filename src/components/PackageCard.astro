@@ -1,6 +1,7 @@
 ---
 import type { OutboundPackage } from "../data/packages";
 import WhatsAppButton from "./WhatsAppButton.astro";
+import Icon from "./Icon.astro";
 
 export interface Props {
   pkg: OutboundPackage;
@@ -32,11 +33,13 @@ const { pkg } = Astro.props;
 
     <!-- Duration & Participants Badges -->
     <div class="d-flex flex-wrap gap-2 mb-3 pb-3 border-bottom border-dark">
-      <span class="badge bg-black text-light border border-secondary px-2 py-1 small">
-        ⏱ {pkg.duration}
+      <span class="badge bg-black text-light border border-secondary px-2 py-1 small d-inline-flex align-items-center gap-1">
+        <Icon name="clock" size={13} class="text-accent" />
+        <span>{pkg.duration}</span>
       </span>
-      <span class="badge bg-black text-light border border-secondary px-2 py-1 small">
-        👥 {pkg.minParticipants}
+      <span class="badge bg-black text-light border border-secondary px-2 py-1 small d-inline-flex align-items-center gap-1">
+        <Icon name="users" size={13} class="text-accent" />
+        <span>{pkg.minParticipants}</span>
       </span>
     </div>
 
@@ -48,7 +51,9 @@ const { pkg } = Astro.props;
       <ul class="list-unstyled small mb-0">
         {pkg.activities.slice(0, 4).map((act) => (
           <li class="d-flex align-items-start gap-2 mb-1 text-light">
-            <span class="text-accent" aria-hidden="true">✓</span>
+            <span class="text-accent mt-1 flex-shrink-0" aria-hidden="true">
+              <Icon name="check" size={13} />
+            </span>
             <span>{act}</span>
           </li>
         ))}

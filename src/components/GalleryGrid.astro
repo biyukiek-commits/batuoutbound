@@ -1,5 +1,6 @@
 ---
 import { galleryData } from "../data/gallery";
+import Icon from "./Icon.astro";
 ---
 
 <div class="row g-4">
@@ -20,14 +21,16 @@ import { galleryData } from "../data/gallery";
             />
             
             <div class="gallery-hover-indicator d-flex align-items-center justify-content-center">
-              <span class="preview-pill-sm">
-                🔍 Buka Preview di Galeri
+              <span class="preview-pill-sm d-inline-flex align-items-center gap-1">
+                <Icon name="search" size={13} />
+                <span>Buka Preview di Galeri</span>
               </span>
             </div>
 
             <div class="gallery-overlay d-flex flex-column justify-content-end p-3 position-absolute top-0 start-0 w-100 h-100">
-              <span class="badge bg-black text-accent border border-secondary align-self-start mb-2 small">
-                📍 {item.location}
+              <span class="badge bg-black text-accent border border-secondary align-self-start mb-2 small d-inline-flex align-items-center gap-1">
+                <Icon name="pin" size={12} class="text-accent" />
+                <span>{item.location}</span>
               </span>
               <h3 class="h5 text-white mb-1">{item.title}</h3>
               <p class="small text-light text-opacity-75 mb-0 d-none d-sm-block">{item.caption}</p>

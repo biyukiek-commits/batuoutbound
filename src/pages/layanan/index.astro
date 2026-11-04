@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import Icon from "../../components/Icon.astro";
 import { servicesData } from "../../data/services";
 import { siteConfig } from "../../data/site";
 import {
@@ -125,7 +126,9 @@ const schemas = [
                 <ul class="list-unstyled small mb-0">
                   {svc.keyBenefits.map((b) => (
                     <li class="d-flex align-items-start gap-2 mb-2 text-light">
-                      <span class="text-accent" aria-hidden="true">✔</span>
+                      <span class="text-accent mt-1 flex-shrink-0" aria-hidden="true">
+                        <Icon name="check" size={13} />
+                      </span>
                       <span>{b}</span>
                     </li>
                   ))}
