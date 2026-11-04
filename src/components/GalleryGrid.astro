@@ -5,28 +5,37 @@ import { galleryData } from "../data/gallery";
 <div class="row g-4">
   {galleryData.map((item, index) => (
     <div class="col-lg-4 col-md-6">
-      <div class="gallery-item-card position-relative overflow-hidden rounded-3 border border-dark h-100" style="background-color: var(--color-surface);">
-        
-        <!-- Image Container with aspect ratio -->
-        <div class="ratio ratio-4x3 position-relative overflow-hidden">
-          <img
-            src={item.image}
-            alt={item.altText}
-            loading={index < 2 ? "eager" : "lazy"}
-            width="600"
-            height="450"
-            class="w-100 h-100 object-fit-cover gallery-img"
-          />
-          <div class="gallery-overlay d-flex flex-column justify-content-end p-3 position-absolute top-0 start-0 w-100 h-100">
-            <span class="badge bg-black text-accent border border-secondary align-self-start mb-2 small">
-              📍 {item.location}
-            </span>
-            <h4 class="h5 text-white mb-1">{item.title}</h4>
-            <p class="small text-light text-opacity-75 mb-0 d-none d-sm-block">{item.caption}</p>
-          </div>
-        </div>
+      <a href="/galeri/" class="text-decoration-none d-block h-100" aria-label={`Lihat preview foto ${item.title}`}>
+        <div class="gallery-item-card position-relative overflow-hidden rounded-3 border border-dark h-100" style="background-color: var(--color-surface);">
+          
+          <!-- Image Container with aspect ratio -->
+          <div class="ratio ratio-4x3 position-relative overflow-hidden">
+            <img
+              src={item.image}
+              alt={item.altText}
+              loading={index < 2 ? "eager" : "lazy"}
+              width="600"
+              height="450"
+              class="w-100 h-100 object-fit-cover gallery-img"
+            />
+            
+            <div class="gallery-hover-indicator d-flex align-items-center justify-content-center">
+              <span class="preview-pill-sm">
+                🔍 Buka Preview di Galeri
+              </span>
+            </div>
 
-      </div>
+            <div class="gallery-overlay d-flex flex-column justify-content-end p-3 position-absolute top-0 start-0 w-100 h-100">
+              <span class="badge bg-black text-accent border border-secondary align-self-start mb-2 small">
+                📍 {item.location}
+              </span>
+              <h3 class="h5 text-white mb-1">{item.title}</h3>
+              <p class="small text-light text-opacity-75 mb-0 d-none d-sm-block">{item.caption}</p>
+            </div>
+          </div>
+
+        </div>
+      </a>
     </div>
   ))}
 </div>
@@ -46,8 +55,32 @@ import { galleryData } from "../data/gallery";
   .gallery-item-card:hover .gallery-img {
     transform: scale(1.05);
   }
+  .gallery-hover-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(9, 9, 9, 0.35);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 2;
+  }
+  .gallery-item-card:hover .gallery-hover-indicator {
+    opacity: 1;
+  }
+  .preview-pill-sm {
+    background: rgba(9, 9, 9, 0.85);
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+  }
   .gallery-overlay {
     background: linear-gradient(180deg, rgba(9, 9, 9, 0) 30%, rgba(9, 9, 9, 0.9) 100%);
+    z-index: 1;
   }
 </style>
-

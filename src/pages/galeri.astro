@@ -54,7 +54,7 @@ const categories = [
           <div class="section-badge">Dokumentasi Nyata di Lapangan</div>
           <h1 class="display-5 fw-bold text-light mb-3">Galeri Kegiatan Outbound Batu Malang</h1>
           <p class="lead text-muted-custom mb-0">
-            Kumpulan potret momen keceriaan, kehangatan, dinamika kelompok, dan adrenalin peserta saat berkegiatan bersama kami di berbagai venue alam terbuka Kota Batu.
+            Kumpulan potret momen keceriaan, kehangatan, dinamika kelompok, dan adrenalin peserta saat berkegiatan bersama kami di berbagai venue alam terbuka Kota Batu. Klik foto untuk melihat preview penuh.
           </p>
         </div>
       </div>
@@ -82,7 +82,19 @@ const categories = [
       <div class="row g-4" id="galleryContainer">
         {galleryData.map((item, index) => (
           <div class="col-lg-4 col-md-6 gallery-card" data-category={item.category}>
-            <div class="card-dark p-0 overflow-hidden h-100 border border-dark">
+            <div
+              class="card-dark p-0 overflow-hidden h-100 border border-dark gallery-preview-trigger"
+              data-img={item.image}
+              data-title={item.title}
+              data-alt={item.altText}
+              data-location={item.location}
+              data-category={item.categoryLabel}
+              data-caption={item.caption}
+              data-index={index}
+              role="button"
+              tabindex="0"
+              aria-label={`Preview foto: ${item.title}`}
+            >
               
               <div class="ratio ratio-4x3 position-relative overflow-hidden">
                 <img
@@ -93,7 +105,15 @@ const categories = [
                   height="450"
                   class="w-100 h-100 object-fit-cover gallery-photo"
                 />
-                <div class="position-absolute top-0 start-0 m-3">
+                
+                <!-- Hover Preview Overlay Indicator -->
+                <div class="gallery-hover-overlay d-flex align-items-center justify-content-center">
+                  <span class="btn-preview-pill">
+                    🔍 Perbesar Foto
+                  </span>
+                </div>
+
+                <div class="position-absolute top-0 start-0 m-3 z-2">
                   <span class="badge bg-black text-accent border border-secondary small">
                     📍 {item.location}
                   </span>
@@ -133,42 +153,261 @@ const categories = [
     </div>
   </section>
 
-  <!-- Client-side filter script (Lightweight, No external libs) -->
-  <script>
-    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
-    const galleryCards = document.querySelectorAll<HTMLElement>('.gallery-card');
+  <!-- Interactive Lightbox Modal Preview (Permintaan Preview Galeri) -->
+  <div
+    class="modal fade"
+    id="galleryPreviewModal"
+    tabindex="-1"
+    aria-labelledby="galleryModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-xl">
+      <div class="modal-content bg-black border border-dark rounded-4 overflow-hidden text-light">
+        
+        <!-- Modal Header -->
+        <div class="modal-header border-bottom border-dark px-4 py-3 d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-dark text-accent border border-secondary" id="modalCategory">Kategori</span>
+            <span class="small text-muted-custom" id="modalLocation">📍 Lokasi</span>
+          </div>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Tutup Preview"
+          ></button>
+        </div>
 
-    filterButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        // Toggle active button style
-        filterButtons.forEach((b) => {
-          b.classList.remove('btn-gold', 'active');
-          b.classList.add('btn-outline-gold');
+        <!-- Modal Body (Image Container) -->
+        <div class="modal-body p-0 position-relative text-center bg-black d-flex align-items-center justify-content-center" style="min-height: 380px; max-height: 75vh;">
+          <img
+            id="modalImage"
+            src=""
+            alt=""
+            class="img-fluid object-fit-contain w-100 h-100"
+            style="max-height: 75vh;"
+          />
+          
+          <!-- Prev / Next Navigation Arrows -->
+          <button
+            type="button"
+            id="prevPhotoBtn"
+            class="modal-nav-btn modal-prev"
+            aria-label="Foto Sebelumnya"
+            title="Sebelumnya (Panah Kiri)"
+          >
+            &#10094;
+          </button>
+          <button
+            type="button"
+            id="nextPhotoBtn"
+            class="modal-nav-btn modal-next"
+            aria-label="Foto Berikutnya"
+            title="Berikutnya (Panah Kanan)"
+          >
+            &#10095;
+          </button>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer border-top border-dark px-4 py-3 d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
+          <div class="text-start">
+            <h4 class="h5 text-light mb-1" id="modalTitle">Judul Foto</h4>
+            <p class="small text-muted-custom mb-0" id="modalCaption">Keterangan foto kegiatan.</p>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <WhatsAppButton
+              variant="gold"
+              size="sm"
+              customMessage="Halo Admin, saya tertarik dengan foto kegiatan di galeri outbound Batu ini dan ingin tanya paketnya."
+            >
+              Tanya Acara Ini via WA
+            </WhatsAppButton>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Client-side filter & Lightbox Modal Script -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Filter Kategori
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const galleryCards = document.querySelectorAll('.gallery-card');
+
+      filterButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach((b) => {
+            b.classList.remove('btn-gold', 'active');
+            b.classList.add('btn-outline-gold');
+          });
+          btn.classList.remove('btn-outline-gold');
+          btn.classList.add('btn-gold', 'active');
+
+          const filterValue = btn.getAttribute('data-filter');
+
+          galleryCards.forEach((card) => {
+            const cardCategory = card.getAttribute('data-category');
+            if (filterValue === 'all' || cardCategory === filterValue) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
         });
-        btn.classList.remove('btn-outline-gold');
-        btn.classList.add('btn-gold', 'active');
+      });
 
-        const filterValue = btn.getAttribute('data-filter');
+      // 2. Lightbox Modal Preview
+      const previewTriggers = Array.from(document.querySelectorAll('.gallery-preview-trigger'));
+      const modalElement = document.getElementById('galleryPreviewModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalCategory = document.getElementById('modalCategory');
+      const modalLocation = document.getElementById('modalLocation');
+      const modalCaption = document.getElementById('modalCaption');
+      const prevBtn = document.getElementById('prevPhotoBtn');
+      const nextBtn = document.getElementById('nextPhotoBtn');
 
-        galleryCards.forEach((card) => {
-          const cardCategory = card.getAttribute('data-category');
-          if (filterValue === 'all' || cardCategory === filterValue) {
-            card.style.display = 'block';
-          } else {
-            card.style.display = 'none';
+      let currentIndex = 0;
+
+      function updateModal(index) {
+        if (index < 0) index = previewTriggers.length - 1;
+        if (index >= previewTriggers.length) index = 0;
+        currentIndex = index;
+
+        const target = previewTriggers[currentIndex];
+        if (!target) return;
+
+        const img = target.getAttribute('data-img');
+        const title = target.getAttribute('data-title');
+        const alt = target.getAttribute('data-alt');
+        const location = target.getAttribute('data-location');
+        const category = target.getAttribute('data-category');
+        const caption = target.getAttribute('data-caption');
+
+        modalImage.src = img;
+        modalImage.alt = alt;
+        modalTitle.textContent = title;
+        modalCategory.textContent = category;
+        modalLocation.textContent = `📍 ${location}`;
+        modalCaption.textContent = caption;
+      }
+
+      previewTriggers.forEach((trigger, idx) => {
+        const openPreview = () => {
+          updateModal(idx);
+          if (window.bootstrap && window.bootstrap.Modal) {
+            const bsModal = window.bootstrap.Modal.getOrCreateInstance(modalElement);
+            bsModal.show();
+          }
+        };
+
+        trigger.addEventListener('click', openPreview);
+        trigger.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openPreview();
           }
         });
+      });
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          updateModal(currentIndex - 1);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          updateModal(currentIndex + 1);
+        });
+      }
+
+      // Keyboard navigation (Panah kiri / kanan)
+      document.addEventListener('keydown', (e) => {
+        if (modalElement && modalElement.classList.contains('show')) {
+          if (e.key === 'ArrowLeft') {
+            updateModal(currentIndex - 1);
+          } else if (e.key === 'ArrowRight') {
+            updateModal(currentIndex + 1);
+          }
+        }
       });
     });
   </script>
 
   <style>
+    .gallery-preview-trigger {
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .gallery-preview-trigger:hover {
+      transform: translateY(-4px);
+      border-color: rgba(200, 169, 106, 0.5) !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
     .gallery-photo {
       transition: transform 0.4s ease;
     }
-    .card-dark:hover .gallery-photo {
+    .gallery-preview-trigger:hover .gallery-photo {
       transform: scale(1.05);
+    }
+    .gallery-hover-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(9, 9, 9, 0.45);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 1;
+    }
+    .gallery-preview-trigger:hover .gallery-hover-overlay {
+      opacity: 1;
+    }
+    .btn-preview-pill {
+      background-color: rgba(9, 9, 9, 0.85);
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.825rem;
+      font-weight: 600;
+      backdrop-filter: blur(4px);
+    }
+    .modal-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(14, 14, 14, 0.75);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+    .modal-nav-btn:hover {
+      background: var(--color-accent);
+      color: #000;
+      border-color: var(--color-accent);
+    }
+    .modal-prev {
+      left: 14px;
+    }
+    .modal-next {
+      right: 14px;
     }
   </style>
 </BaseLayout>
-

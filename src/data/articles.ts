@@ -3,6 +3,24 @@ export interface ArticleSection {
   content: string;
 }
 
+export interface ArticleFAQ {
+  question: string;
+  answer: string;
+}
+
+export interface AuthorProfile {
+  name: string;
+  role: string;
+  bio: string;
+  avatar: string;
+}
+
+export interface RecommendedRead {
+  title: string;
+  slug: string;
+  category: string;
+}
+
 export interface ArticleItem {
   id: string;
   slug: string;
@@ -13,12 +31,15 @@ export interface ArticleItem {
   publishDateFormatted: string;
   readTime: string;
   author: string;
+  authorProfile: AuthorProfile;
   image: string;
   altText: string;
   tags: string[];
   introduction: string;
+  bacaJuga: RecommendedRead;
   sections: ArticleSection[];
   conclusion: string;
+  faqs: ArticleFAQ[];
 }
 
 export const articlesData: ArticleItem[] = [
@@ -32,29 +53,54 @@ export const articlesData: ArticleItem[] = [
     publishDateFormatted: "28 Oktober 2026",
     readTime: "5 menit baca",
     author: "Tim Editorial Batu Outbound",
+    authorProfile: {
+      name: "Tim Editorial Batu Outbound",
+      role: "Spesialis Acara Luar Ruang & Program SDM",
+      bio: "Praktisi dan konsultan kegiatan outdoor experiential learning di Batu Malang, berdedikasi merancang program gathering yang aman, efektif, dan berdampak bagi organisasi.",
+      avatar: "/images/hero/hero-outbound-batu.webp"
+    },
     image: "/images/blog/panduan-outbound.webp",
-    altText: "Panduan memilih paket outbound di Batu Malang untuk rombongan kantor dan komunitas",
+    altText: "Pemandangan alam pegunungan sejuk Kota Batu Malang sebagai lokasi kegiatan outbound dan gathering",
     tags: ["Outbound Batu", "Tips Gathering", "Team Building"],
     introduction: "Merencanakan kegiatan outbound atau gathering kantor di kawasan Kota Batu dan Malang memerlukan kecermatan agar anggaran yang dikeluarkan berbanding lurus dengan dampak kekompakan tim yang diharapkan. Udara sejuk pegunungan Batu memang menjadi magnet utama, namun pemilihan paket yang tepat bergantung pada pemahaman kebutuhan organisasi Anda.",
+    bacaJuga: {
+      title: "5 Manfaat Nyata Outbound Team Building untuk Produktivitas dan Soliditas Karyawan",
+      slug: "manfaat-team-building-untuk-produktivitas-kerja",
+      category: "Team Building"
+    },
     sections: [
       {
-        heading: "1. Tentukan Sasaran Utama Kegiatan Sejak Awal",
+        heading: "Tentukan Sasaran Utama Kegiatan Sejak Awal",
         content: "Sebelum melihat rincian harga, tentukan apakah agenda Anda berfokus pada refreshing santai (Fun Gathering) atau pembedahan dinamika kerja (Team Building & Synergy Training). Jika targetnya adalah mempererat silaturahmi tanpa tekanan kompetisi, pilihlah fun games santai. Namun jika perusahaan sedang menghadapi tantangan target baru atau perubahan struktur manajemen, modul team building terstruktur adalah pilihan terbaik."
       },
       {
-        heading: "2. Sesuaikan Karakteristik Peserta dengan Lokasi Venue",
+        heading: "Sesuaikan Karakteristik Peserta dengan Lokasi Venue",
         content: "Kota Batu menawarkan beragam pilihan lokasi dengan karakteristik berbeda. Venue seperti Hutan Pinus Coban Rondo menyajikan keteduhan alami di ketinggian, cocok untuk corporate outbound yang membutuhkan privasi dan konsentrasi. Sementara area Selecta atau Songgoriti lebih ramah untuk gathering yang melibatkan anak-anak dan lansia karena kontur tanahnya yang relatif datar dan fasilitas umumnya yang lengkap."
       },
       {
-        heading: "3. Perhatikan Rasio Pendampingan Fasilitator dan Keamanan",
+        heading: "Perhatikan Rasio Pendampingan Fasilitator dan Keamanan",
         content: "Standar keselamatan (safety) merupakan hal mutlak dalam kegiatan luar ruang. Pastikan penyelenggara menyediakan rasio fasilitator yang memadai, idealnya 1 fasilitator mendampingi 10 hingga 15 peserta. Rasio ini menjamin setiap peserta terpantau dengan baik, dinamika kelompok berjalan aktif, dan prosedur pertolongan pertama (P3K) selalu siaga."
       },
       {
-        heading: "4. Transparansi Fasilitas dan Rencana Kontinjensi (Plan B)",
+        heading: "Transparansi Fasilitas dan Rencana Kontinjensi (Plan B)",
         content: "Tanyakan secara rinci fasilitas apa saja yang sudah termasuk (peralatan, sound system, air mineral, konsumsi, banner, dan dokumentasi) serta apa yang dikecualikan. Selain itu, mengingat iklim pegunungan Batu yang sejuk dan terkadang terjadi hujan lokal, pastikan provider outbound memiliki skenario cadangan seperti aula semi-indoor agar acara tetap berlangsung lancar."
       }
     ],
-    conclusion: "Dengan merumuskan tujuan, memilih venue yang tepat, dan bermitra dengan penyelenggara berlisensi, kegiatan outbound Anda di Batu Malang akan menjadi investasi berharga bagi soliditas tim."
+    conclusion: "Dengan merumuskan tujuan, memilih venue yang tepat, dan bermitra dengan penyelenggara berlisensi, kegiatan outbound Anda di Batu Malang akan menjadi investasi berharga bagi soliditas tim.",
+    faqs: [
+      {
+        question: "Berapa lama waktu ideal yang dibutuhkan untuk memesan paket outbound?",
+        answer: "Kami menyarankan konfirmasi reservasi minimal 2 hingga 4 minggu sebelum hari pelaksanaan, terutama untuk mengamankan izin venue populer dan ketersediaan fasilitator di akhir pekan."
+      },
+      {
+        question: "Apakah lokasi outbound di Batu bisa dipilih sendiri oleh panitia?",
+        answer: "Bisa. Anda bebas memilih lokasi yang kami rekomendasikan (Coban Rondo, Songgoriti, Selecta, Kusuma Agrowisata) atau menggunakan villa/resort pribadi yang telah Anda sewa."
+      },
+      {
+        question: "Bagaimana jika ada peserta yang memiliki pantangan fisik ringan?",
+        answer: "Fasilitator kami akan memberikan penyesuaian peran dalam permainan (misalnya sebagai pengatur strategi atau penilai pos) sehingga peserta tetap terlibat aktif tanpa risiko fisik."
+      }
+    ]
   },
   {
     id: "art-2",
@@ -66,33 +112,54 @@ export const articlesData: ArticleItem[] = [
     publishDateFormatted: "20 Oktober 2026",
     readTime: "4 menit baca",
     author: "Tim Fasilitator",
+    authorProfile: {
+      name: "Tim Fasilitator Batu Outbound",
+      role: "Lead Master Game & Facilitator",
+      bio: "Instruktur bersertifikasi Badan Nasional Sertifikasi Profesi (BNSP) bidang kepanduan outdoor dengan pengalaman lebih dari 10 tahun memfasilitasi korporasi multinasional dan BUMN.",
+      avatar: "/images/packages/team-building.webp"
+    },
     image: "/images/blog/manfaat-team-building.webp",
-    altText: "Peserta saling bergandengan tangan dalam simulasi team building yang mempererat kerjasama",
+    altText: "Aktivitas simulasi kerjasama dan kepercayaan tim outbound di kawasan hutan pinus Batu",
     tags: ["Produktivitas", "Leadership", "Budaya Kerja"],
     introduction: "Rutinitas kerja berulang dan tekanan target sering kali memicu kejenuhan serta memunculkan sekat (silo mentality) antar divisi dalam sebuah organisasi. Outbound team building berbasis experiential learning bukan sekadar rekreasi bersama, melainkan metode teruji untuk merekatkan kembali sinergi organisasi.",
+    bacaJuga: {
+      title: "Mengenal Perbedaan Outbound Training, Team Building, dan Fun Games Gathering",
+      slug: "perbedaan-outbound-team-building-dan-fun-games",
+      category: "Edukasi"
+    },
     sections: [
       {
-        heading: "1. Meruntuhkan Sekat dan Batasan Struktural",
+        heading: "Meruntuhkan Sekat dan Batasan Struktural",
         content: "Di lapangan terbuka, status jabatan dan hierarki formal melebur menjadi peran fungsional kelompok. Staf junior dan pimpinan senior bermain bersama dalam posisi setara. Hal ini menciptakan suasana inklusif yang meluruhkan rasa canggung dan membangun kedekatan emosional yang tulus."
       },
       {
-        heading: "2. Melatih Komunikasi Dua Arah yang Asertif",
+        heading: "Melatih Komunikasi Dua Arah yang Asertif",
         content: "Banyak simulasi outbound yang menuntut peserta menyampaikan instruksi secara presisi di bawah keterbatasan waktu atau keterbatasan indera (seperti permainan mata tertutup). Latihan ini membiasakan karyawan untuk mendengarkan secara aktif dan berbicara dengan jelas tanpa asumsi sepihak."
       },
       {
-        heading: "3. Mengasah Kemampuan Problem Solving Kolektif",
+        heading: "Mengasah Kemampuan Problem Solving Kolektif",
         content: "Tantangan fisik dan logika di alam terbuka memaksa tim untuk berpikir kreatif di luar kebiasaan (out of the box). Anggota tim belajar bagaimana menghargai ide orang lain, memilih solusi terbaik, dan mengeksekusi strategi dengan disiplin tinggi."
       },
       {
-        heading: "4. Menumbuhkan Rasa Saling Percaya (Trust Building)",
+        heading: "Menumbuhkan Rasa Saling Percaya (Trust Building)",
         content: "Kepercayaan adalah fondasi utama kecepatan kerja. Melalui tantangan saling menjaga keselamatan rekan, karyawan merasakan langsung bahwa keberhasilan individu sangat bertumpu pada integritas dan komitmen rekan satu timnya."
       },
       {
-        heading: "5. Mengisi Ulang Energi dan Antusiasme Baru",
+        heading: "Mengisi Ulang Energi dan Antusiasme Baru",
         content: "Berada di alam terbuka Kota Batu dengan pepohonan pinus dan udara bersih terbukti menurunkan tingkat hormon stres (kortisol). Karyawan pulang dengan pikiran yang segar dan antusiasme baru untuk menghadapi tantangan perusahaan."
       }
     ],
-    conclusion: "Mengadakan team building tahunan adalah langkah strategis manajemen untuk merawat aset paling berharga perusahaan: sumber daya manusia yang solid, loyal, dan produktif."
+    conclusion: "Mengadakan team building tahunan adalah langkah strategis manajemen untuk merawat aset paling berharga perusahaan: sumber daya manusia yang solid, loyal, dan produktif.",
+    faqs: [
+      {
+        question: "Berapa lama efek positif team building dapat bertahan pada budaya kerja kantor?",
+        answer: "Dampak jangka panjang akan optimal jika diiringi sesi debriefing yang mengaitkan nilai permainan dengan KPI kantor, serta tindak lanjut refleksi berkala oleh bagian HRD."
+      },
+      {
+        question: "Apakah team building bisa dipadukan dengan sesi materi presentasi kerja?",
+        answer: "Sangat bisa. Konsep 2D1N kami sering memfasilitasi meeting/evaluasi formal di ruang aula hotel pada pagi hari, dilanjutkan dinamika outbound di alam terbuka pada sore harinya."
+      }
+    ]
   },
   {
     id: "art-3",
@@ -104,25 +171,46 @@ export const articlesData: ArticleItem[] = [
     publishDateFormatted: "15 Oktober 2026",
     readTime: "6 menit baca",
     author: "Master Game Batu Outbound",
+    authorProfile: {
+      name: "Master Game Batu Outbound",
+      role: "Program Designer & Experiential Trainer",
+      bio: "Spesialis perancang dinamika kelompok dan ice breaking ceria yang telah memandu ribuan peserta gathering keluarga, instansi dinas, dan institusi pendidikan di Jawa Timur.",
+      avatar: "/images/packages/fun-gathering.webp"
+    },
     image: "/images/blog/perbedaan-outbound.webp",
-    altText: "Ilustrasi perbandingan antara fun games rekreasi dan team building berorientasi karakter",
+    altText: "Rombongan peserta tertawa riang mengikuti permainan dinamika fun games di lapangan hijau Batu",
     tags: ["Edukasi Outbound", "Rundown", "Panduan HR"],
     introduction: "Istilah outbound sering kali digunakan secara umum untuk menyebut semua kegiatan luar ruangan. Namun dalam industri pengembangan SDM, terdapat perbedaan mendasar antara Outbound Training, Team Building, dan Fun Games Gathering.",
+    bacaJuga: {
+      title: "Panduan Lengkap Memilih Paket Outbound di Batu Malang Sesuai Kebutuhan Tim",
+      slug: "panduan-memilih-paket-outbound-batu-malang",
+      category: "Panduan"
+    },
     sections: [
       {
-        heading: "1. Fun Games Gathering: Fokus pada Rekreasi & Keceriaan",
+        heading: "Fun Games Gathering: Fokus pada Rekreasi & Keceriaan",
         content: "Tujuan utama fun games adalah pelepas stres (refreshing) dan kebersamaan. Aturan permainan sederhana, tidak membutuhkan ketahanan fisik tinggi, dan dipenuhi gelak tawa. Tipe ini sangat cocok untuk family gathering, reuni akbar, atau outing santai di mana pesertanya mencakup berbagai kalangan usia."
       },
       {
-        heading: "2. Team Building: Fokus pada Dinamika Kelompok & Kerjasama",
+        heading: "Team Building: Fokus pada Dinamika Kelompok & Kerjasama",
         content: "Team building dirancang dengan struktur permainan yang menuntut strategi dan pembagian peran. Terdapat pos-pos rotasi tantangan dan kompetisi sehat antar kelompok. Di akhir setiap sesi, fasilitator memberikan ulasan singkat mengenai apa yang berjalan baik dan apa yang perlu diperbaiki dalam kerjasama tim."
       },
       {
-        heading: "3. Outbound Training / Character Building: Fokus pada Perubahan Sikap",
+        heading: "Outbound Training / Character Building: Fokus pada Perubahan Sikap",
         content: "Ini adalah tingkat paling mendalam yang berorientasi pada pelatihan kompetensi personal (leadership, disiplin, resiliensi). Biasanya dipandu oleh trainer bersertifikat dengan instrumen evaluasi perilaku. Simulasi sering kali melibatkan tantangan rintangan alam dengan debriefing psikologis yang mendalam."
       }
     ],
-    conclusion: "Pastikan Anda mengomunikasikan ekspektasi utama kepada tim penyedia agar desain games dan fasilitator yang ditugaskan tepat sasaran dengan kebutuhan organisasi Anda."
+    conclusion: "Pastikan Anda mengomunikasikan ekspektasi utama kepada tim penyedia agar desain games dan fasilitator yang ditugaskan tepat sasaran dengan kebutuhan organisasi Anda.",
+    faqs: [
+      {
+        question: "Bisakah satu acara memadukan Fun Games dan Team Building sekaligus?",
+        answer: "Bisa. Skema paling populer adalah memulai dengan sesi Fun Games / Ice Breaking di pagi hari untuk memanaskan suasana, lalu berlanjut ke simulasi Team Building yang lebih berbobot di siang hari."
+      },
+      {
+        question: "Apakah outbound sekolah lebih cocok memilih fun games atau character building?",
+        answer: "Untuk perpisahan atau rekreasi santai, Fun Games sangat direkomendasikan. Namun untuk kegiatan LDKS atau awal tahun ajaran, paket Character Building jauh lebih efektif membentuk mentalitas siswa."
+      }
+    ]
   }
 ];
 

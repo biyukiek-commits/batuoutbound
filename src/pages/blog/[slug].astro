@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import FAQAccordion from "../../components/FAQAccordion.astro";
 import { articlesData, type ArticleItem } from "../../data/articles";
 import { siteConfig } from "../../data/site";
 import {
@@ -9,7 +10,8 @@ import {
   generateWebSiteSchema,
   generateWebPageSchema,
   generateBreadcrumbSchema,
-  generateArticleSchema
+  generateArticleSchema,
+  generateFAQSchema
 } from "../../utils/schema";
 
 export function getStaticPaths() {
@@ -50,7 +52,8 @@ const schemas = [
     datePublished: article.publishDate,
     url: pageUrl,
     authorName: article.author
-  })
+  }),
+  generateFAQSchema(article.faqs)
 ];
 
 const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0, 2);
@@ -92,32 +95,58 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
             <time datetime={article.publishDate}>Dipublikasikan: {article.publishDateFormatted}</time>
           </div>
 
-          <!-- Featured Image -->
-          <div class="rounded-4 overflow-hidden mb-5 border border-dark">
-            <img
-              src={article.image}
-              alt={article.altText}
-              class="w-100 object-fit-cover"
-              style="max-height: 460px;"
-              width="800"
-              height="460"
-            />
-          </div>
+          <!-- Featured Image with Explicit Alt and Caption (Permintaan #2) -->
+          <figure class="mb-5">
+            <div class="rounded-4 overflow-hidden border border-dark">
+              <img
+                src={article.image}
+                alt={article.altText}
+                class="w-100 object-fit-cover"
+                style="max-height: 460px;"
+                width="800"
+                height="460"
+                loading="eager"
+              />
+            </div>
+            <figcaption class="small text-muted-custom text-center mt-2 fst-italic">
+              Foto: {article.altText}
+            </figcaption>
+          </figure>
 
-          <!-- Table of Contents (PRD FR-06) -->
-          <div class="p-4 rounded-3 mb-5 border border-dark" style="background-color: var(--color-surface);">
-            <h2 class="h6 text-accent fw-bold text-uppercase mb-3" style="font-size: 0.85rem; letter-spacing: 0.05em;">
-              Daftar Isi Artikel:
-            </h2>
-            <ol class="mb-0 ps-3 small text-muted-custom" style="line-height: 1.8;">
-              {article.sections.map((sec, idx) => (
+          <!-- Table of Contents: Bisa Dibuka/Tutup (Permintaan #1) -->
+          <div class="toc-wrapper mb-5 rounded-3 border border-dark overflow-hidden" style="background-color: var(--color-surface);">
+            <div class="p-3 px-4 d-flex align-items-center justify-content-between border-bottom border-dark cursor-pointer" id="tocHeader" role="button" aria-expanded="true" aria-controls="tocBody">
+              <div class="d-flex align-items-center gap-2">
+                <span class="text-accent fs-6">📑</span>
+                <span class="h6 mb-0 text-accent fw-bold text-uppercase" style="font-size: 0.85rem; letter-spacing: 0.05em;">
+                  Daftar Isi Artikel
+                </span>
+              </div>
+              <button type="button" class="btn btn-sm btn-outline-secondary py-1 px-2 text-light text-opacity-75 small" id="tocToggleBtn">
+                <span id="tocToggleText">Tutup [-]</span>
+              </button>
+            </div>
+            <div id="tocBody" class="p-4 pt-3">
+              <ol class="mb-0 ps-3 small text-muted-custom" style="line-height: 2;">
+                {article.sections.map((sec, idx) => (
+                  <li>
+                    <a href={`#sec-${idx}`} class="text-light text-decoration-none hover-accent">
+                      {sec.heading}
+                    </a>
+                  </li>
+                ))}
                 <li>
-                  <a href={`#sec-${idx}`} class="text-light text-decoration-none hover-accent">
-                    {sec.heading}
+                  <a href="#kesimpulan" class="text-light text-decoration-none hover-accent">
+                    Kesimpulan
                   </a>
                 </li>
-              ))}
-            </ol>
+                <li>
+                  <a href="#faq-artikel" class="text-light text-decoration-none hover-accent">
+                    Pertanyaan yang Sering Diajukan (FAQ)
+                  </a>
+                </li>
+              </ol>
+            </div>
           </div>
 
           <!-- Introduction -->
@@ -127,20 +156,53 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
 
           <!-- Content Sections -->
           {article.sections.map((sec, idx) => (
-            <section id={`sec-${idx}`} class="mb-5">
-              <h2 class="h3 text-light mb-3" style="line-height: 1.35;">{sec.heading}</h2>
-              <p class="text-muted-custom" style="font-size: 1.05rem; line-height: 1.8;">
-                {sec.content}
-              </p>
-            </section>
+            <>
+              <section id={`sec-${idx}`} class="mb-5">
+                <h2 class="h3 text-light mb-3" style="line-height: 1.35;">
+                  {idx + 1}. {sec.heading}
+                </h2>
+                <p class="text-muted-custom" style="font-size: 1.05rem; line-height: 1.8;">
+                  {sec.content}
+                </p>
+              </section>
+
+              {/* Kotak "Baca Juga" (Permintaan #3) - Muncul setelah poin pertama */}
+              {idx === 0 && article.bacaJuga && (
+                <div class="p-3 p-md-4 rounded-3 border border-dark mb-5 d-flex align-items-center gap-3" style="background-color: var(--color-surface-2); border-left: 4px solid var(--color-accent) !important;">
+                  <div class="badge bg-black text-accent border border-secondary text-uppercase px-2 py-1 small">
+                    Baca Juga
+                  </div>
+                  <div class="flex-grow-1">
+                    <a href={`/blog/${article.bacaJuga.slug}/`} class="text-light fw-bold text-decoration-none hover-accent small fs-6">
+                      {article.bacaJuga.title} &rarr;
+                    </a>
+                  </div>
+                </div>
+              )}
+            </>
           ))}
 
           <!-- Conclusion -->
-          <div class="p-4 rounded-3 border border-dark mb-5" style="background-color: var(--color-surface-2);">
+          <div id="kesimpulan" class="p-4 rounded-3 border border-dark mb-5" style="background-color: var(--color-surface-2);">
             <h3 class="h5 text-accent mb-2">Kesimpulan</h3>
             <p class="text-muted-custom mb-0 small" style="line-height: 1.8;">
               {article.conclusion}
             </p>
+          </div>
+
+          <!-- FAQ di Bawah Kesimpulan (Permintaan #4) -->
+          <div id="faq-artikel" class="mb-5 pt-3">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <span class="text-accent fs-5">❓</span>
+              <h2 class="h4 text-light mb-0">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+            </div>
+            <p class="small text-muted-custom mb-3">
+              Beberapa pertanyaan umum seputar topik artikel ini:
+            </p>
+            <FAQAccordion
+              accordionId="articleFaqAccordion"
+              faqs={article.faqs.map((f, i) => ({ id: `art-faq-${i}`, question: f.question, answer: f.answer }))}
+            />
           </div>
 
           <!-- Tags -->
@@ -154,7 +216,7 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
           </div>
 
           <!-- Contextual WhatsApp Conversion Card -->
-          <div class="p-4 p-md-5 rounded-4 border border-dark mb-5" style="background: linear-gradient(135deg, #141414 0%, #1c1c1c 100%);">
+          <div class="p-4 p-md-5 rounded-4 border border-dark mb-4" style="background: linear-gradient(135deg, #141414 0%, #1c1c1c 100%);">
             <h3 class="h4 text-light mb-2">Rencanakan Outbound Tim Anda Bersama Kami</h3>
             <p class="small text-muted-custom mb-4">
               Dapatkan proposal penawaran resmi, pilihan lokasi di Batu Malang, dan konsultasi gratis via WhatsApp:
@@ -173,8 +235,87 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
             </div>
           </div>
 
+          <!-- Author Box & Bagikan Artikel di Bawah CTA (Permintaan #5) -->
+          <div class="p-4 rounded-4 border border-dark mb-5" style="background-color: var(--color-surface);">
+            
+            <!-- Author Profile -->
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 pb-4 mb-4 border-bottom border-dark">
+              <div class="rounded-circle overflow-hidden border border-secondary" style="width: 64px; height: 64px; min-width: 64px;">
+                <img
+                  src={article.authorProfile.avatar}
+                  alt={article.authorProfile.name}
+                  class="w-100 h-100 object-fit-cover"
+                  width="64"
+                  height="64"
+                />
+              </div>
+              <div>
+                <div class="d-flex align-items-center gap-2">
+                  <h4 class="h6 text-light mb-0 fw-bold">{article.authorProfile.name}</h4>
+                  <span class="badge bg-dark text-accent border border-secondary small">Penulis</span>
+                </div>
+                <div class="small text-accent mt-1 mb-1">{article.authorProfile.role}</div>
+                <p class="small text-muted-custom mb-0" style="line-height: 1.5;">
+                  {article.authorProfile.bio}
+                </p>
+              </div>
+            </div>
+
+            <!-- Bagikan Artikel (Social Share) -->
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
+              <div class="small text-light fw-bold">
+                Bagikan Artikel Ini:
+              </div>
+              <div class="d-flex flex-wrap align-items-center gap-2">
+                <!-- WhatsApp Share -->
+                <a
+                  href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${article.title} - ${pageUrl}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-sm btn-outline-success d-inline-flex align-items-center gap-1 px-3 py-1 text-decoration-none rounded-pill"
+                  title="Bagikan ke WhatsApp"
+                >
+                  <span>💬 WhatsApp</span>
+                </a>
+
+                <!-- Facebook Share -->
+                <a
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1 px-3 py-1 text-decoration-none rounded-pill"
+                  title="Bagikan ke Facebook"
+                >
+                  <span>📘 Facebook</span>
+                </a>
+
+                <!-- Twitter / X Share -->
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(pageUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-sm btn-outline-light d-inline-flex align-items-center gap-1 px-3 py-1 text-decoration-none rounded-pill"
+                  title="Bagikan ke X / Twitter"
+                >
+                  <span>✖ Twitter/X</span>
+                </a>
+
+                <!-- Copy Link Button -->
+                <button
+                  type="button"
+                  id="copyLinkBtn"
+                  class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-1 px-3 py-1 text-light rounded-pill"
+                  title="Salin Tautan Artikel"
+                >
+                  <span id="copyLinkText">🔗 Salin Link</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
           <!-- Related Articles -->
-          <div class="pt-5 border-top border-dark">
+          <div class="pt-4 border-top border-dark">
             <h3 class="h4 text-light mb-4">Artikel Terkait Lainnya</h3>
             <div class="row g-4">
               {relatedArticles.map((rel) => (
@@ -200,10 +341,49 @@ const relatedArticles = articlesData.filter((a) => a.id !== article.id).slice(0,
     </div>
   </article>
 
+  <!-- Interactive Scripts: TOC Toggle & Copy Link -->
+  <script is:inline>
+    // 1. Toggle Table of Contents (Bisa dibuka/tutup)
+    const tocHeader = document.getElementById('tocHeader');
+    const tocBody = document.getElementById('tocBody');
+    const tocToggleText = document.getElementById('tocToggleText');
+
+    if (tocHeader && tocBody && tocToggleText) {
+      tocHeader.addEventListener('click', () => {
+        const isHidden = tocBody.style.display === 'none';
+        if (isHidden) {
+          tocBody.style.display = 'block';
+          tocToggleText.textContent = 'Tutup [-]';
+          tocHeader.setAttribute('aria-expanded', 'true');
+        } else {
+          tocBody.style.display = 'none';
+          tocToggleText.textContent = 'Buka [+]';
+          tocHeader.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // 2. Copy Link Button with Feedback Toast
+    const copyBtn = document.getElementById('copyLinkBtn');
+    const copyText = document.getElementById('copyLinkText');
+    if (copyBtn && copyText) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          copyText.textContent = '✔ Tersalin!';
+          setTimeout(() => {
+            copyText.textContent = '🔗 Salin Link';
+          }, 2500);
+        });
+      });
+    }
+  </script>
+
   <style>
+    .cursor-pointer {
+      cursor: pointer;
+    }
     .hover-accent:hover {
       color: var(--color-accent) !important;
     }
   </style>
 </BaseLayout>
-
