@@ -54,7 +54,7 @@ const categories = [
           <div class="section-badge">Dokumentasi Nyata di Lapangan</div>
           <h1 class="display-5 fw-bold text-light mb-3">Galeri Kegiatan Outbound Batu Malang</h1>
           <p class="lead text-muted-custom mb-0">
-            Kumpulan potret momen keceriaan, kehangatan, dinamika kelompok, dan adrenalin peserta saat berkegiatan bersama kami di berbagai venue alam terbuka Kota Batu. Klik foto untuk melihat preview penuh.
+            Kumpulan potret momen keceriaan, kehangatan, dinamika kelompok, dan adrenalin peserta saat berkegiatan bersama kami di berbagai venue alam terbuka Kota Batu. <strong>Klik foto untuk melihat preview penuh (lightbox).</strong>
           </p>
         </div>
       </div>
@@ -93,7 +93,7 @@ const categories = [
               data-index={index}
               role="button"
               tabindex="0"
-              aria-label={`Preview foto: ${item.title}`}
+              aria-label={`Klik untuk preview foto: ${item.title}`}
             >
               
               <div class="ratio ratio-4x3 position-relative overflow-hidden">
@@ -153,191 +153,244 @@ const categories = [
     </div>
   </section>
 
-  <!-- Interactive Lightbox Modal Preview (Permintaan Preview Galeri) -->
+  <!-- Native Zero-Dependency Lightbox Modal (100% Guaranteed Preview) -->
   <div
-    class="modal fade"
-    id="galleryPreviewModal"
-    tabindex="-1"
-    aria-labelledby="galleryModalTitle"
+    id="galleryLightbox"
+    class="lightbox-backdrop"
     aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    style="display: none;"
   >
-    <div class="modal-dialog modal-dialog-centered modal-lg modal-xl">
-      <div class="modal-content bg-black border border-dark rounded-4 overflow-hidden text-light">
-        
-        <!-- Modal Header -->
-        <div class="modal-header border-bottom border-dark px-4 py-3 d-flex align-items-center justify-content-between">
-          <div class="d-flex align-items-center gap-2">
-            <span class="badge bg-dark text-accent border border-secondary" id="modalCategory">Kategori</span>
-            <span class="small text-muted-custom" id="modalLocation">📍 Lokasi</span>
-          </div>
-          <button
-            type="button"
-            class="btn-close btn-close-white"
-            data-bs-dismiss="modal"
-            aria-label="Tutup Preview"
-          ></button>
+    <div class="lightbox-container">
+      
+      <!-- Top Bar: Category, Location & Close Button -->
+      <div class="lightbox-header">
+        <div class="d-flex flex-wrap align-items-center gap-2">
+          <span class="badge bg-black text-accent border border-secondary" id="lbCategory">Kategori</span>
+          <span class="small text-light text-opacity-75" id="lbLocation">📍 Lokasi</span>
+          <span class="badge bg-dark text-muted-custom border border-dark ms-1" id="lbCounter">1 / 6</span>
         </div>
+        <button
+          type="button"
+          class="lightbox-close-btn"
+          id="lbCloseBtn"
+          aria-label="Tutup Preview Foto (Esc)"
+          title="Tutup (Esc)"
+        >
+          ✕
+        </button>
+      </div>
 
-        <!-- Modal Body (Image Container) -->
-        <div class="modal-body p-0 position-relative text-center bg-black d-flex align-items-center justify-content-center" style="min-height: 380px; max-height: 75vh;">
+      <!-- Main Photo Display & Nav Arrows -->
+      <div class="lightbox-content-box">
+        <button
+          type="button"
+          class="lightbox-nav-btn lb-prev"
+          id="lbPrevBtn"
+          aria-label="Foto Sebelumnya"
+          title="Sebelumnya (Panah Kiri)"
+        >
+          ‹
+        </button>
+        
+        <div class="lightbox-image-wrapper">
           <img
-            id="modalImage"
+            id="lbImage"
             src=""
             alt=""
-            class="img-fluid object-fit-contain w-100 h-100"
-            style="max-height: 75vh;"
+            class="lightbox-img"
           />
-          
-          <!-- Prev / Next Navigation Arrows -->
-          <button
-            type="button"
-            id="prevPhotoBtn"
-            class="modal-nav-btn modal-prev"
-            aria-label="Foto Sebelumnya"
-            title="Sebelumnya (Panah Kiri)"
-          >
-            &#10094;
-          </button>
-          <button
-            type="button"
-            id="nextPhotoBtn"
-            class="modal-nav-btn modal-next"
-            aria-label="Foto Berikutnya"
-            title="Berikutnya (Panah Kanan)"
-          >
-            &#10095;
-          </button>
         </div>
 
-        <!-- Modal Footer -->
-        <div class="modal-footer border-top border-dark px-4 py-3 d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
-          <div class="text-start">
-            <h4 class="h5 text-light mb-1" id="modalTitle">Judul Foto</h4>
-            <p class="small text-muted-custom mb-0" id="modalCaption">Keterangan foto kegiatan.</p>
-          </div>
-          <div class="d-flex align-items-center gap-2">
-            <WhatsAppButton
-              variant="gold"
-              size="sm"
-              customMessage="Halo Admin, saya tertarik dengan foto kegiatan di galeri outbound Batu ini dan ingin tanya paketnya."
-            >
-              Tanya Acara Ini via WA
-            </WhatsAppButton>
-          </div>
-        </div>
-
+        <button
+          type="button"
+          class="lightbox-nav-btn lb-next"
+          id="lbNextBtn"
+          aria-label="Foto Berikutnya"
+          title="Berikutnya (Panah Kanan)"
+        >
+          ›
+        </button>
       </div>
+
+      <!-- Bottom Info Bar -->
+      <div class="lightbox-footer">
+        <div class="lightbox-info text-start">
+          <h4 class="h5 text-light mb-1" id="lbTitle">Judul Foto</h4>
+          <p class="small text-muted-custom mb-0" id="lbCaption">Keterangan foto kegiatan.</p>
+        </div>
+        <div>
+          <a
+            id="lbWaBtn"
+            href="https://wa.me/6281217366600?text=Halo%20Admin%2C%20saya%20tertarik%20dengan%20foto%20di%20galeri%20outbound%20Batu."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-gold btn-sm py-2 px-3 fs-6 text-decoration-none"
+          >
+            Tanya Acara Ini via WA
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <!-- Client-side filter & Lightbox Modal Script -->
+  <!-- Client-side filter & Native Lightbox Script -->
   <script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
-      // 1. Filter Kategori
-      const filterButtons = document.querySelectorAll('.filter-btn');
-      const galleryCards = document.querySelectorAll('.gallery-card');
+    (function () {
+      function initGallery() {
+        // 1. Filter Kategori
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.gallery-card');
 
-      filterButtons.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          filterButtons.forEach((b) => {
-            b.classList.remove('btn-gold', 'active');
-            b.classList.add('btn-outline-gold');
+        filterBtns.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            filterBtns.forEach((b) => {
+              b.classList.remove('btn-gold', 'active');
+              b.classList.add('btn-outline-gold');
+            });
+            btn.classList.remove('btn-outline-gold');
+            btn.classList.add('btn-gold', 'active');
+
+            const filter = btn.getAttribute('data-filter');
+            cards.forEach((card) => {
+              const cat = card.getAttribute('data-category');
+              if (filter === 'all' || cat === filter) {
+                card.style.display = 'block';
+              } else {
+                card.style.display = 'none';
+              }
+            });
           });
-          btn.classList.remove('btn-outline-gold');
-          btn.classList.add('btn-gold', 'active');
+        });
 
-          const filterValue = btn.getAttribute('data-filter');
+        // 2. Lightbox Modal Preview Elements
+        const triggers = document.querySelectorAll('.gallery-preview-trigger');
+        const lightbox = document.getElementById('galleryLightbox');
+        const lbImg = document.getElementById('lbImage');
+        const lbTitle = document.getElementById('lbTitle');
+        const lbCategory = document.getElementById('lbCategory');
+        const lbLocation = document.getElementById('lbLocation');
+        const lbCaption = document.getElementById('lbCaption');
+        const lbCounter = document.getElementById('lbCounter');
+        const lbClose = document.getElementById('lbCloseBtn');
+        const lbPrev = document.getElementById('lbPrevBtn');
+        const lbNext = document.getElementById('lbNextBtn');
+        const lbWa = document.getElementById('lbWaBtn');
 
-          galleryCards.forEach((card) => {
-            const cardCategory = card.getAttribute('data-category');
-            if (filterValue === 'all' || cardCategory === filterValue) {
-              card.style.display = 'block';
-            } else {
-              card.style.display = 'none';
+        if (!lightbox || !triggers.length) return;
+
+        let currentIndex = 0;
+        const total = triggers.length;
+
+        function showPhoto(index) {
+          if (index < 0) index = total - 1;
+          if (index >= total) index = 0;
+          currentIndex = index;
+
+          const el = triggers[currentIndex];
+          if (!el) return;
+
+          const img = el.getAttribute('data-img') || '';
+          const title = el.getAttribute('data-title') || '';
+          const alt = el.getAttribute('data-alt') || '';
+          const location = el.getAttribute('data-location') || '';
+          const category = el.getAttribute('data-category') || '';
+          const caption = el.getAttribute('data-caption') || '';
+
+          if (lbImg) {
+            lbImg.src = img;
+            lbImg.alt = alt;
+          }
+          if (lbTitle) lbTitle.textContent = title;
+          if (lbCategory) lbCategory.textContent = category;
+          if (lbLocation) lbLocation.textContent = `📍 ${location}`;
+          if (lbCaption) lbCaption.textContent = caption;
+          if (lbCounter) lbCounter.textContent = `${currentIndex + 1} / ${total}`;
+
+          if (lbWa) {
+            const msg = `Halo Admin, saya tertarik dengan foto kegiatan "${title}" di ${location} dan ingin konsultasi paketnya.`;
+            lbWa.href = `https://wa.me/6281217366600?text=${encodeURIComponent(msg)}`;
+          }
+        }
+
+        function openLightbox(index) {
+          showPhoto(index);
+          lightbox.style.display = 'flex';
+          void lightbox.offsetWidth; // Force reflow
+          lightbox.classList.add('active');
+          lightbox.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+          lightbox.classList.remove('active');
+          lightbox.setAttribute('aria-hidden', 'true');
+          setTimeout(() => {
+            if (!lightbox.classList.contains('active')) {
+              lightbox.style.display = 'none';
+            }
+          }, 200);
+          document.body.style.overflow = '';
+        }
+
+        triggers.forEach((trigger, idx) => {
+          trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            openLightbox(idx);
+          });
+          trigger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openLightbox(idx);
             }
           });
         });
-      });
 
-      // 2. Lightbox Modal Preview
-      const previewTriggers = Array.from(document.querySelectorAll('.gallery-preview-trigger'));
-      const modalElement = document.getElementById('galleryPreviewModal');
-      const modalImage = document.getElementById('modalImage');
-      const modalTitle = document.getElementById('modalTitle');
-      const modalCategory = document.getElementById('modalCategory');
-      const modalLocation = document.getElementById('modalLocation');
-      const modalCaption = document.getElementById('modalCaption');
-      const prevBtn = document.getElementById('prevPhotoBtn');
-      const nextBtn = document.getElementById('nextPhotoBtn');
+        if (lbClose) lbClose.addEventListener('click', closeLightbox);
 
-      let currentIndex = 0;
-
-      function updateModal(index) {
-        if (index < 0) index = previewTriggers.length - 1;
-        if (index >= previewTriggers.length) index = 0;
-        currentIndex = index;
-
-        const target = previewTriggers[currentIndex];
-        if (!target) return;
-
-        const img = target.getAttribute('data-img');
-        const title = target.getAttribute('data-title');
-        const alt = target.getAttribute('data-alt');
-        const location = target.getAttribute('data-location');
-        const category = target.getAttribute('data-category');
-        const caption = target.getAttribute('data-caption');
-
-        modalImage.src = img;
-        modalImage.alt = alt;
-        modalTitle.textContent = title;
-        modalCategory.textContent = category;
-        modalLocation.textContent = `📍 ${location}`;
-        modalCaption.textContent = caption;
-      }
-
-      previewTriggers.forEach((trigger, idx) => {
-        const openPreview = () => {
-          updateModal(idx);
-          if (window.bootstrap && window.bootstrap.Modal) {
-            const bsModal = window.bootstrap.Modal.getOrCreateInstance(modalElement);
-            bsModal.show();
-          }
-        };
-
-        trigger.addEventListener('click', openPreview);
-        trigger.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openPreview();
+        // Click on dark backdrop outside container closes lightbox
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) {
+            closeLightbox();
           }
         });
-      });
 
-      if (prevBtn) {
-        prevBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          updateModal(currentIndex - 1);
-        });
-      }
-
-      if (nextBtn) {
-        nextBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          updateModal(currentIndex + 1);
-        });
-      }
-
-      // Keyboard navigation (Panah kiri / kanan)
-      document.addEventListener('keydown', (e) => {
-        if (modalElement && modalElement.classList.contains('show')) {
-          if (e.key === 'ArrowLeft') {
-            updateModal(currentIndex - 1);
-          } else if (e.key === 'ArrowRight') {
-            updateModal(currentIndex + 1);
-          }
+        if (lbPrev) {
+          lbPrev.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showPhoto(currentIndex - 1);
+          });
         }
-      });
-    });
+
+        if (lbNext) {
+          lbNext.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showPhoto(currentIndex + 1);
+          });
+        }
+
+        // Keyboard navigation (Esc, ArrowLeft, ArrowRight)
+        document.addEventListener('keydown', (e) => {
+          if (lightbox.classList.contains('active')) {
+            if (e.key === 'Escape') {
+              closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+              showPhoto(currentIndex - 1);
+            } else if (e.key === 'ArrowRight') {
+              showPhoto(currentIndex + 1);
+            }
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initGallery);
+      } else {
+        initGallery();
+      }
+    })();
   </script>
 
   <style>
@@ -380,34 +433,162 @@ const categories = [
       font-weight: 600;
       backdrop-filter: blur(4px);
     }
-    .modal-nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(14, 14, 14, 0.75);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+
+    /* Native Lightbox Modal Styles */
+    .lightbox-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(4, 4, 4, 0.94);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.22s ease-in-out;
+    }
+    .lightbox-backdrop.active {
+      display: flex;
+      opacity: 1;
+    }
+    .lightbox-container {
+      background: #111111;
+      border: 1px solid #333333;
+      border-radius: 18px;
+      max-width: 1080px;
+      width: 100%;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85);
+      animation: scaleUp 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    @keyframes scaleUp {
+      from {
+        transform: scale(0.96);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    .lightbox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid #222222;
+      background: #0d0d0d;
+    }
+    .lightbox-close-btn {
+      background: #222222;
+      color: #ffffff;
+      border: 1px solid #444444;
       border-radius: 50%;
-      width: 44px;
-      height: 44px;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: all 0.2s ease;
+    }
+    .lightbox-close-btn:hover {
+      background: #dc3545;
+      border-color: #dc3545;
+      transform: scale(1.05);
+    }
+    .lightbox-content-box {
+      position: relative;
+      background: #060606;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      max-height: 65vh;
+      padding: 0.5rem;
+    }
+    .lightbox-image-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 63vh;
+      object-fit: contain;
+      border-radius: 8px;
+      user-select: none;
+    }
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(20, 20, 20, 0.8);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      line-height: 1;
       cursor: pointer;
       transition: all 0.2s ease;
       z-index: 10;
     }
-    .modal-nav-btn:hover {
+    .lightbox-nav-btn:hover {
       background: var(--color-accent);
-      color: #000;
+      color: #000000;
       border-color: var(--color-accent);
     }
-    .modal-prev {
+    .lb-prev {
       left: 14px;
     }
-    .modal-next {
+    .lb-next {
       right: 14px;
+    }
+    .lightbox-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid #222222;
+      background: #0d0d0d;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    @media (max-width: 576px) {
+      .lightbox-content-box {
+        max-height: 50vh;
+      }
+      .lightbox-img {
+        max-height: 48vh;
+      }
+      .lightbox-nav-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.5rem;
+      }
+      .lb-prev {
+        left: 6px;
+      }
+      .lb-next {
+        right: 6px;
+      }
     }
   </style>
 </BaseLayout>
