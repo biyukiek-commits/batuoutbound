@@ -67,13 +67,24 @@ const schemas = [
   <Breadcrumb items={breadcrumbItems} />
 
   <!-- Page Header -->
-  <section class="py-5 position-relative overflow-hidden" style="background-color: #0c0c0c; border-bottom: 1px solid var(--color-border);">
-    <div class="container-xl">
+  <section class="page-hero-section text-light" aria-label="Hero FAQ">
+    <img
+      src="/images/hero/hero-faq.webp"
+      alt="Pusat tanya jawab dan panduan outbound Batu Malang"
+      class="page-hero-bg"
+      width="1600"
+      height="600"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="page-hero-overlay" aria-hidden="true"></div>
+
+    <div class="container-xl page-hero-content">
       <div class="row align-items-center">
         <div class="col-lg-8">
           <div class="section-badge">Pusat Bantuan & Tanya Jawab</div>
           <h1 class="display-5 fw-bold text-light mb-3">Pertanyaan yang Sering Diajukan (FAQ)</h1>
-          <p class="lead text-muted-custom mb-0">
+          <p class="lead text-light text-opacity-90 mb-0" style="line-height: 1.7;">
             Kumpulan jawaban transparan mengenai pelaksanaan outbound, pemilihan venue di kawasan Batu Malang, biaya, dan tata cara reservasi.
           </p>
         </div>

@@ -65,13 +65,24 @@ const schemas = [
   <Breadcrumb items={breadcrumbItems} />
 
   <!-- Service Detail Header -->
-  <section class="py-5 position-relative overflow-hidden" style="background-color: #0c0c0c; border-bottom: 1px solid var(--color-border);">
-    <div class="container-xl">
+  <section class="page-hero-section text-light" aria-label={`Hero Layanan ${service.title}`}>
+    <img
+      src={service.image}
+      alt={`Dokumentasi layanan outbound ${service.title} di Batu Malang`}
+      class="page-hero-bg"
+      width="1600"
+      height="600"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="page-hero-overlay" aria-hidden="true"></div>
+
+    <div class="container-xl page-hero-content">
       <div class="row align-items-center gy-4">
         <div class="col-lg-8">
           <div class="section-badge mb-3">Layanan Unggulan</div>
           <h1 class="display-5 fw-bold text-light mb-3">{service.title}</h1>
-          <p class="lead text-muted-custom mb-4">{service.fullDesc}</p>
+          <p class="lead text-light text-opacity-90 mb-4" style="line-height: 1.7;">{service.fullDesc}</p>
           <div class="d-flex flex-wrap gap-2">
             <span class="badge bg-dark border border-secondary px-3 py-2 small d-inline-flex align-items-center gap-1">
               <Icon name="target" size={13} class="text-accent" />

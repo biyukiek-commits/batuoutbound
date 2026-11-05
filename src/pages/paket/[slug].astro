@@ -65,8 +65,19 @@ const schemas = [
   <Breadcrumb items={breadcrumbItems} />
 
   <!-- Package Detail Hero -->
-  <section class="py-5 position-relative overflow-hidden" style="background-color: #0c0c0c; border-bottom: 1px solid var(--color-border);">
-    <div class="container-xl">
+  <section class="page-hero-section text-light" aria-label={`Hero Detail ${pkg.title}`}>
+    <img
+      src={pkg.image}
+      alt={pkg.altText}
+      class="page-hero-bg"
+      width="1600"
+      height="600"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="page-hero-overlay" aria-hidden="true"></div>
+
+    <div class="container-xl page-hero-content">
       <div class="row align-items-center gy-4">
         <div class="col-lg-8">
           <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
@@ -79,7 +90,7 @@ const schemas = [
           </div>
 
           <h1 class="display-5 fw-bold text-light mb-3">{pkg.title}</h1>
-          <p class="lead text-muted-custom mb-4">{pkg.summary}</p>
+          <p class="lead text-light text-opacity-90 mb-4" style="line-height: 1.7;">{pkg.summary}</p>
 
           <div class="d-flex flex-wrap gap-2 text-light small pb-2">
             <span class="badge bg-dark border border-secondary px-3 py-2 d-inline-flex align-items-center gap-1">

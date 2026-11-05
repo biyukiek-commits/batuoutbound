@@ -48,13 +48,24 @@ const categories = [
   <Breadcrumb items={breadcrumbItems} />
 
   <!-- Page Header -->
-  <section class="py-5 position-relative overflow-hidden" style="background-color: #0c0c0c; border-bottom: 1px solid var(--color-border);">
-    <div class="container-xl">
+  <section class="page-hero-section text-light" aria-label="Hero Galeri Dokumentasi">
+    <img
+      src="/images/hero/hero-galeri.webp"
+      alt="Dokumentasi foto kegiatan outbound, team building, dan gathering di Kota Batu"
+      class="page-hero-bg"
+      width="1600"
+      height="600"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="page-hero-overlay" aria-hidden="true"></div>
+
+    <div class="container-xl page-hero-content">
       <div class="row align-items-center">
         <div class="col-lg-8">
           <div class="section-badge">Dokumentasi Nyata di Lapangan</div>
           <h1 class="display-5 fw-bold text-light mb-3">Galeri Kegiatan Outbound Batu Malang</h1>
-          <p class="lead text-muted-custom mb-0">
+          <p class="lead text-light text-opacity-90 mb-0" style="line-height: 1.7;">
             Kumpulan potret momen keceriaan, kehangatan, dinamika kelompok, dan adrenalin peserta saat berkegiatan bersama kami di berbagai venue alam terbuka Kota Batu. <strong>Klik foto untuk melihat preview penuh (lightbox).</strong>
           </p>
         </div>
